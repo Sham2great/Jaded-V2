@@ -5,77 +5,309 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>For Ayli ♡</title>
 <style>
-*{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#4b2639,#171018 65%);color:#f8edf2;font-family:Georgia,serif;overflow-x:hidden}
-.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
-.envelope{width:min(430px,92vw);height:280px;position:relative;cursor:pointer;filter:drop-shadow(0 20px 35px #0008);transition:.7s}
-.env{position:absolute;inset:0;background:#7d304e;border-radius:10px;overflow:hidden}
-.env:before,.env:after{content:"";position:absolute;bottom:0;width:72%;height:100%;background:#963c5d}
-.env:before{left:-18%;transform:skewY(32deg);transform-origin:bottom left}
-.env:after{right:-18%;transform:skewY(-32deg);transform-origin:bottom right}
-.flap{position:absolute;z-index:3;left:0;top:0;width:0;height:0;border-left:215px solid transparent;border-right:215px solid transparent;border-top:145px solid #a74766;transform-origin:top;transition:.8s}
-.seal{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:#d9a4b6;display:grid;place-items:center;color:#6c2440;font-size:25px;box-shadow:0 5px 15px #0004;transition:.5s}
-.hint{position:absolute;z-index:5;bottom:25px;width:100%;text-align:center;font:600 13px system-ui;color:#ffeef5;letter-spacing:1px}
-.letter{display:none;max-width:720px;width:100%;background:#fff8fb;color:#35242c;border-radius:18px;padding:34px 28px;box-shadow:0 25px 60px #0008;animation:rise .9s ease}
-.letter h1{font-size:36px;margin:0 0 22px;color:#7d304e;text-align:center}
-.letter p{font-size:17px;line-height:1.75;margin:0 0 18px}
-.quote{text-align:center;font-style:italic;color:#7d304e;padding:10px 0 20px}
-.end{text-align:center;margin-top:26px;color:#7d304e;font-size:15px}
-.heart{position:fixed;bottom:-30px;animation:float 6s linear forwards;pointer-events:none}
-@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 50% 15%,#6a354d 0%,#321b29 34%,#160f15 78%);
+  color:#f8edf2;font-family:Georgia,serif;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
+  background-image:radial-gradient(#fff 1px,transparent 1px);
+  background-size:42px 42px;animation:stars 14s linear infinite;
+}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;z-index:2}
+.ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.glow{position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(80px);background:#b45c7c33;animation:glow 7s ease-in-out infinite}
+.g1{left:-130px;top:18%}.g2{right:-130px;bottom:8%;animation-delay:2s}
+
+.envelope{
+  width:min(440px,92vw);height:285px;position:relative;cursor:pointer;
+  filter:drop-shadow(0 25px 45px #000b);
+  transition:1s cubic-bezier(.2,.8,.2,1);
+  animation:floatEnvelope 4s ease-in-out infinite;
+}
+.env{
+  position:absolute;inset:0;background:linear-gradient(145deg,#8d3857,#63233e);
+  border-radius:12px;overflow:hidden;border:1px solid #d47b9a55;
+  box-shadow:inset 0 1px 0 #fff2;
+}
+.env:before,.env:after{
+  content:"";position:absolute;bottom:0;width:75%;height:100%;
+  background:linear-gradient(145deg,#a44969,#7a2d4c);
+}
+.env:before{left:-20%;transform:skewY(32deg);transform-origin:bottom left}
+.env:after{right:-20%;transform:skewY(-32deg);transform-origin:bottom right}
+.flap{
+  position:absolute;z-index:3;left:0;top:0;width:0;height:0;
+  border-left:220px solid transparent;border-right:220px solid transparent;
+  border-top:150px solid #b34e70;transform-origin:top;
+  transition:1s cubic-bezier(.2,.8,.2,1);
+  filter:drop-shadow(0 4px 3px #0003);
+}
+.seal{
+  position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:64px;height:64px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff5f8,#d59bad 65%,#a75d78);
+  display:grid;place-items:center;color:#722945;font-size:27px;
+  box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff16;
+  transition:.6s;animation:sealPulse 2.5s ease-in-out infinite;
+}
+.hint{
+  position:absolute;z-index:5;bottom:22px;width:100%;text-align:center;
+  font:700 12px system-ui;color:#ffeef5;letter-spacing:2px;
+  animation:hintPulse 1.8s ease-in-out infinite;
+}
+.open .flap{transform:rotateX(180deg);z-index:1}
+.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+.open{animation:none;transform:translateY(25px) scale(.96)}
+.paper{
+  position:absolute;z-index:2;left:8%;right:8%;top:28px;height:225px;
+  background:#fff9fb;border-radius:5px;color:#6e2c46;
+  transform:translateY(70px);opacity:.18;
+  transition:1s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 20px #0004;
+}
+.open .paper{transform:translateY(-18px);opacity:1}
+
+.letter{
+  display:none;max-width:760px;width:100%;
+  background:linear-gradient(145deg,#fffafd,#fff5f8);
+  color:#35242c;border-radius:22px;padding:42px 32px;
+  box-shadow:0 30px 80px #000b,0 0 0 1px #fff8;
+  animation:rise 1s cubic-bezier(.2,.8,.2,1);
+  position:relative;overflow:hidden;
+}
+.letter:before{
+  content:"";position:absolute;inset:-100px;
+  background:radial-gradient(circle at 10% 20%,#d98aa322,transparent 28%),radial-gradient(circle at 90% 80%,#7d304e18,transparent 30%);
+  pointer-events:none;
+}
+.letter>*{position:relative;z-index:1}
+.letter h1{font-size:38px;margin:0 0 26px;color:#7d304e;text-align:center}
+.letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
+.music{text-align:center;margin:25px 0 5px}
+.music button{
+  border:0;border-radius:999px;padding:12px 20px;background:#7d304e;color:white;
+  font-weight:700;cursor:pointer;box-shadow:0 8px 20px #7d304e33;transition:.25s;
+}
+.music button:hover{transform:translateY(-2px);box-shadow:0 12px 25px #7d304e44}
+.player{font:12px system-ui;color:#8b7079;margin-top:8px;min-height:16px}
+
+.memories{margin-top:48px;padding-top:34px;border-top:1px solid #ead5dd}
+.memories h2{text-align:center;color:#7d304e;margin:0 0 7px;font-size:25px}
+.sub{text-align:center;color:#8b7079;font-size:14px!important;margin-bottom:25px!important}
+.polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.polaroid{
+  width:150px;background:#fff;border:0;padding:9px 9px 15px;
+  box-shadow:0 13px 25px #0003;cursor:pointer;
+  transform:rotate(-4deg);transition:.35s cubic-bezier(.2,.8,.2,1);
+  font-family:Georgia,serif;color:#35242c;position:relative;
+}
+.polaroid:nth-child(2){transform:rotate(4deg)}
+.polaroid:nth-child(3){transform:rotate(-2deg)}
+.polaroid:nth-child(4){transform:rotate(5deg)}
+.polaroid:nth-child(5){transform:rotate(-5deg)}
+.polaroid:before{
+  content:"";position:absolute;top:-7px;left:50%;width:55px;height:18px;
+  background:#f5dce5aa;transform:translateX(-50%) rotate(-2deg);
+}
+.polaroid:hover,.polaroid:focus{
+  transform:translateY(-12px) rotate(0deg) scale(1.04);
+  outline:2px solid #b45c7c55;box-shadow:0 22px 35px #0004;
+}
+.cover{
+  display:block;width:100%;aspect-ratio:1/1;object-fit:cover;
+  background:#171018;border-radius:1px;
+}
+.polaroid small{display:block;margin-top:10px;font-size:13px;letter-spacing:.3px}
+.reveal{
+  text-align:center;font-style:italic;color:#7d304e;min-height:52px;
+  line-height:1.6;padding:18px 18px 5px;transition:.35s;
+}
+.end{text-align:center;margin-top:32px;color:#7d304e;font-size:15px;line-height:1.6}
+
+.tulip-field{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+.tulip{
+  position:absolute;bottom:-10px;width:70px;height:150px;opacity:.9;
+  transform-origin:bottom center;animation:sway 5s ease-in-out infinite;
+}
+.tulip:before{
+  content:"";position:absolute;left:50%;bottom:0;width:4px;height:105px;
+  background:linear-gradient(#5c875d,#365d3e);transform:translateX(-50%);
+}
+.tulip:after{
+  content:"";position:absolute;left:50%;top:10px;width:45px;height:38px;
+  transform:translateX(-50%);
+  background:#fff;border-radius:55% 55% 45% 45% / 75% 75% 35% 35%;
+  box-shadow:-13px 4px 0 -2px #fff,13px 4px 0 -2px #fff,0 2px 14px #fff8;
+}
+.tulip i,.tulip b{position:absolute;bottom:43px;width:35px;height:15px;background:#46704b}
+.tulip i{left:7px;transform:rotate(25deg);border-radius:100% 0}
+.tulip b{right:7px;transform:rotate(-25deg);border-radius:0 100%}
+.t1{left:2%;transform:scale(.75);animation-delay:-1s}.t2{left:11%;transform:scale(.55);animation-delay:-3s}
+.t3{left:20%;transform:scale(.85);animation-delay:-2s}.t4{right:18%;transform:scale(.65);animation-delay:-4s}
+.t5{right:8%;transform:scale(.9);animation-delay:-1.5s}.t6{right:1%;transform:scale(.55);animation-delay:-3.5s}
+.t7{left:34%;transform:scale(.45);animation-delay:-4.5s}.t8{right:31%;transform:scale(.5);animation-delay:-2.5s}
+
+.petal{
+  position:fixed;top:-20px;color:#fff;opacity:.7;pointer-events:none;
+  animation:fall linear forwards;z-index:3;
+}
+.heart{
+  position:fixed;bottom:-30px;color:#eeb8ca;
+  animation:float 6s linear forwards;pointer-events:none;z-index:4;
+}
+@keyframes rise{from{opacity:0;transform:translateY(45px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes float{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
-.open .flap{transform:rotateX(180deg);z-index:1} .open .seal{opacity:0} .open{transform:translateY(20px) scale(.94);opacity:0}
-@media(max-width:500px){.letter{padding:28px 21px}.letter p{font-size:16px}}
-.memories{margin-top:45px;padding-top:30px;border-top:1px solid #ead5dd}.memories h2{text-align:center;color:#7d304e;margin:0 0 6px;font-size:24px}.sub{text-align:center;color:#8b7079;font-size:14px!important}.polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;margin:25px 0}.polaroid{width:145px;background:#fff;border:0;padding:10px 10px 14px;box-shadow:0 10px 20px #0003;cursor:pointer;transform:rotate(-4deg);transition:.3s;font-family:Georgia,serif;color:#35242c}.polaroid:nth-child(even){transform:rotate(5deg)}.polaroid:hover,.polaroid:focus{transform:translateY(-7px) rotate(0deg);outline:2px solid #a74766}.cover{display:grid;place-items:center;height:125px;background:linear-gradient(145deg,#171018,#6d3049);color:#fff;font-size:18px;font-weight:bold;padding:12px}.polaroid small{display:block;margin-top:9px;font-size:13px}.reveal{text-align:center;font-style:italic;color:#7d304e;min-height:48px;line-height:1.5;padding:8px 15px}.p2{background:#fff}.p3{background:#fff}.p4{background:#fff}.p5{background:#fff}@media(max-width:500px){.polaroid{width:130px}.cover{height:112px;font-size:16px}}\n</style>
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
+@keyframes floatEnvelope{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes sealPulse{0%,100%{box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff16}50%{box-shadow:0 8px 25px #0005,0 0 0 9px #ffffff10}}
+@keyframes hintPulse{0%,100%{opacity:.7}50%{opacity:1}}
+@keyframes glow{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:.9}}
+@keyframes sway{0%,100%{rotate:-2deg}50%{rotate:3deg}}
+@keyframes stars{to{background-position:0 42px}}
+@media(max-width:650px){
+  .tulip{opacity:.5}.t7,.t8{display:none}
+  .letter{padding:32px 22px}.letter p{font-size:16px}
+  .polaroid{width:135px}.envelope{height:260px}.flap{border-left-width:200px;border-right-width:200px;border-top-width:138px}
+}
+</style>
 </head>
 <body>
+<div class="ambient"><div class="glow g1"></div><div class="glow g2"></div></div>
+
+<div class="tulip-field">
+  <div class="tulip t1"><i></i><b></b></div><div class="tulip t2"><i></i><b></b></div>
+  <div class="tulip t3"><i></i><b></b></div><div class="tulip t4"><i></i><b></b></div>
+  <div class="tulip t5"><i></i><b></b></div><div class="tulip t6"><i></i><b></b></div>
+  <div class="tulip t7"><i></i><b></b></div><div class="tulip t8"><i></i><b></b></div>
+</div>
+
 <div class="wrap">
   <div class="envelope" id="env" onclick="openLetter()">
-    <div class="env"></div><div class="flap"></div><div class="seal">♡</div>
+    <div class="env"></div>
+    <div class="paper"></div>
+    <div class="flap"></div>
+    <div class="seal">♡</div>
     <div class="hint">TAP TO OPEN</div>
   </div>
+
   <article class="letter" id="letter">
     <h1>For Ayli ♡</h1>
     <p>Ayli,</p>
-<p>Out of everyone I could have met, somehow my mind keeps choosing you.</p>
-<p>I don’t know if there’s a path that ever leads to us, or if I’m only standing at the beginning of a road that was never meant to reach you.</p>
-<p>But if I could choose, I wouldn’t choose someone else just because they’re possible.</p>
-<p>I’d choose you.</p>
-<p>Even with the uncertainty, even knowing there are things I can’t change, part of me still hopes that somehow, someday, it could actually be you.</p>
-<p>And maybe that’s the hardest part, wanting something so specifically when you have no idea if it can ever exist.</p>
-<p>So I’m not asking you for an answer. I just wanted you to know that if there were a choice I could make, I already know who I’d choose.</p>
-<audio id="music" src="Jaded%20(1).mp3" preload="auto"></audio>
-<div class="music">
-      <button onclick="playMusic()">♫ Play Jaded</button>
+    <p>Out of everyone I could have met, somehow my mind keeps choosing you.</p>
+    <p>I don’t know if there’s a path that ever leads to us, or if I’m only standing at the beginning of a road that was never meant to reach you.</p>
+    <p>But if I could choose, I wouldn’t choose someone else just because they’re possible.</p>
+    <p><strong>I’d choose you.</strong></p>
+    <p>Even with the uncertainty, even knowing there are things I can’t change, part of me still hopes that somehow, someday, it could actually be you.</p>
+    <p>And maybe that’s the hardest part, wanting something so specifically when you have no idea if it can ever exist.</p>
+    <p>So I’m not asking you for an answer. I just wanted you to know that if there were a choice I could make, I already know who I’d choose.</p>
+
+    <audio id="music" src="Jaded%20(1).mp3" preload="auto"></audio>
+    <div class="music">
+      <button id="musicBtn" onclick="toggleMusic(event)">♫ Play Jaded</button>
       <div class="player" id="player"></div>
     </div>
+
     <section class="memories">
-<h2>songs that say what I can’t</h2>
-<p class="sub">Tap a Polaroid.</p>
-<div class="polaroids">
-<button class="polaroid p1" data-msg="Somehow, even with all the uncertainty, you’re still the person my mind comes back to."><span class="cover">Take Care</span><small>Drake</small></button>
-<button class="polaroid p2" data-msg="I don’t know where this goes, but part of me still wishes the answer could be you."><span class="cover">Nothing Was the Same</span><small>Drake</small></button>
-<button class="polaroid p3" data-msg="Maybe the hardest thing is wanting something I can’t promise will ever be possible."><span class="cover">Views</span><small>Drake</small></button>
-<button class="polaroid p4" data-msg="If I had to choose between what is easy and what I actually want, I already know my answer."><span class="cover">Her Loss</span><small>Drake</small></button>
-<button class="polaroid p5" data-msg="I’m not trying to force a future. I just can’t pretend I don’t want you in mine."><span class="cover">For All the Dogs</span><small>Drake</small></button>
-</div>
-div class="reveal" id="reveal">Tap a Polaroid to reveal its note.</div>
-</section>
-<div class="end">I don’t know if it can be you. I just know I want it to be.</div>
+      <h2>songs that say what I can’t</h2>
+      <p class="sub">Tap a Polaroid.</p>
+      <div class="polaroids">
+        <button class="polaroid" data-msg="Somehow, even with all the uncertainty, you’re still the person my mind comes back to.">
+          <img class="cover" src="https://dose.store/cdn/shop/files/draketakecarecover.png?v=1704894100&width=600" alt="Drake Take Care album cover">
+          <small>Take Care • Drake</small>
+        </button>
+        <button class="polaroid" data-msg="I don’t know where this goes, but part of me still wishes the answer could be you.">
+          <img class="cover" src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/51/61/f3/5161f3c4-2292-f035-eb68-6f95bbc9edd6/00602537542338.rgb.jpg/600x600cc.jpg" alt="Drake Nothing Was the Same album cover">
+          <small>Nothing Was the Same • Drake</small>
+        </button>
+        <button class="polaroid" data-msg="Maybe the hardest thing is wanting something I can’t promise will ever be possible.">
+          <img class="cover" src="https://www.vinyl-digital.com/out/admin/ewebay/z1/602547973368_z1.jpg" alt="Drake Views album cover">
+          <small>Views • Drake</small>
+        </button>
+        <button class="polaroid" data-msg="If I had to choose between what is easy and what I actually want, I already know my answer.">
+          <img class="cover" src="https://prodimage.images-bn.com/pimages/0602448944245_p0_v2_s600x595.jpg" alt="Drake and 21 Savage Her Loss album cover">
+          <small>Her Loss • Drake & 21 Savage</small>
+        </button>
+        <button class="polaroid" data-msg="I’m not trying to force a future. I just can’t pretend I don’t want you in mine.">
+          <img class="cover" src="https://valor-dictus.com/wp-content/uploads/2023/09/F4F7USOXAAAMvR7.jpeg" alt="Drake For All the Dogs album cover">
+          <small>For All the Dogs • Drake</small>
+        </button>
+      </div>
+      <div class="reveal" id="reveal">Tap a Polaroid to reveal its note.</div>
+    </section>
+
+    <div class="end">I don’t know if it can be you. I just know I want it to be.</div>
   </article>
 </div>
+
 <script>
+let opened=false;
 function openLetter(){
- const e=document.getElementById('env'), l=document.getElementById('letter');
- e.classList.add('open');document.getElementById('music').play();
- setTimeout(()=>{e.style.display='none';l.style.display='block';},650);
- for(let i=0;i<18;i++){
-  const h=document.createElement('div');h.className='heart';h.textContent=['♡','♥','✦'][i%3];
-  h.style.left=Math.random()*100+'vw';h.style.fontSize=(14+Math.random()*18)+'px';
-  h.style.animationDelay=(Math.random()*1.5)+'s';document.body.appendChild(h);
-  setTimeout(()=>h.remove(),7500);
- }
+  if(opened)return;
+  opened=true;
+  const e=document.getElementById('env');
+  e.classList.add('open');
+
+  for(let i=0;i<22;i++){
+    const h=document.createElement('div');
+    h.className='heart';
+    h.textContent=['♡','♥','✦'][i%3];
+    h.style.left=Math.random()*100+'vw';
+    h.style.fontSize=(14+Math.random()*18)+'px';
+    h.style.animationDelay=(Math.random()*1.8)+'s';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+  }
+
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    p.textContent='✦';
+    p.style.left=Math.random()*100+'vw';
+    p.style.fontSize=(8+Math.random()*12)+'px';
+    p.style.animationDuration=(5+Math.random()*5)+'s';
+    p.style.animationDelay=(Math.random()*2)+'s';
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),12000);
+  }
+
+  setTimeout(()=>{
+    e.style.display='none';
+    document.getElementById('letter').style.display='block';
+    document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'});
+  },950);
 }
-document.querySelectorAll('.polaroid').forEach(card=>card.addEventListener('click',()=>{document.getElementById('reveal').textContent=card.dataset.msg;}));
+function toggleMusic(event){
+  event.stopPropagation();
+  const music=document.getElementById('music');
+  const btn=document.getElementById('musicBtn');
+  const player=document.getElementById('player');
+  if(music.paused){
+    music.play().then(()=>{
+      btn.textContent='Ⅱ Pause Jaded';
+      player.textContent='Now playing';
+    }).catch(()=>{
+      player.textContent='Tap again to play the song.';
+    });
+  }else{
+    music.pause();
+    btn.textContent='♫ Play Jaded';
+    player.textContent='';
+  }
+}
+document.querySelectorAll('.polaroid').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const reveal=document.getElementById('reveal');
+    reveal.style.opacity='0';
+    setTimeout(()=>{
+      reveal.textContent=card.dataset.msg;
+      reveal.style.opacity='1';
+    },150);
+  });
+});
 </script>
 </body>
 </html>
