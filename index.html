@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For Jade ♡</title>
+<style>
+*{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#4b2639,#171018 65%);color:#f8edf2;font-family:Georgia,serif;overflow-x:hidden}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+.envelope{width:min(430px,92vw);height:280px;position:relative;cursor:pointer;filter:drop-shadow(0 20px 35px #0008);transition:.7s}
+.env{position:absolute;inset:0;background:#7d304e;border-radius:10px;overflow:hidden}
+.env:before,.env:after{content:"";position:absolute;bottom:0;width:72%;height:100%;background:#963c5d}
+.env:before{left:-18%;transform:skewY(32deg);transform-origin:bottom left}
+.env:after{right:-18%;transform:skewY(-32deg);transform-origin:bottom right}
+.flap{position:absolute;z-index:3;left:0;top:0;width:0;height:0;border-left:215px solid transparent;border-right:215px solid transparent;border-top:145px solid #a74766;transform-origin:top;transition:.8s}
+.seal{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);width:60px;height:60px;border-radius:50%;background:#d9a4b6;display:grid;place-items:center;color:#6c2440;font-size:25px;box-shadow:0 5px 15px #0004;transition:.5s}
+.hint{position:absolute;z-index:5;bottom:25px;width:100%;text-align:center;font:600 13px system-ui;color:#ffeef5;letter-spacing:1px}
+.letter{display:none;max-width:720px;width:100%;background:#fff8fb;color:#35242c;border-radius:18px;padding:34px 28px;box-shadow:0 25px 60px #0008;animation:rise .9s ease}
+.letter h1{font-size:36px;margin:0 0 22px;color:#7d304e;text-align:center}
+.letter p{font-size:17px;line-height:1.75;margin:0 0 18px}
+.quote{text-align:center;font-style:italic;color:#7d304e;padding:10px 0 20px}
+.end{text-align:center;margin-top:26px;color:#7d304e;font-size:15px}
+.heart{position:fixed;bottom:-30px;animation:float 6s linear forwards;pointer-events:none}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes float{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
+.open .flap{transform:rotateX(180deg);z-index:1} .open .seal{opacity:0} .open{transform:translateY(20px) scale(.94);opacity:0}
+@media(max-width:500px){.letter{padding:28px 21px}.letter p{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="envelope" id="env" onclick="openLetter()">
+    <div class="env"></div><div class="flap"></div><div class="seal">♡</div>
+    <div class="hint">TAP TO OPEN</div>
+  </div>
+  <article class="letter" id="letter">
+    <h1>For Jade ♡</h1>
+    <p>Jade,</p>
+<p>I don&#x27;t really know what to call what I feel for you yet. I just know that I genuinely like you, and that&#x27;s something I haven&#x27;t felt in a while.</p>
+<p>I know you&#x27;ve been hurt, and I understand why you&#x27;ve built walls around yourself. When you&#x27;ve been disappointed enough times, keeping people at a distance can feel safer than giving someone the chance to hurt you again. I don&#x27;t want to rush you through that, and I don&#x27;t want you to feel like you owe me your trust.</p>
+<p>I just want the chance to show you who I actually am.</p>
+<p>I&#x27;m not perfect, but I know my intentions with you are genuine. I&#x27;m not here because I want something temporary or because I want to prove I&#x27;m different from every guy who&#x27;s hurt you. I just genuinely enjoy you. There&#x27;s something about you that makes me want to stay and see where this could go.</p>
+<p>And maybe that&#x27;s why the uncertainty scares me too. I can be patient. I can be honest. I can show you that I&#x27;m someone you can trust. But I still don&#x27;t know if, one day, you&#x27;ll choose to let me a little closer.</p>
+<p>Maybe that&#x27;s why Drake&#x27;s “Jaded” hits differently to me — because sometimes the hardest part isn&#x27;t caring about someone, it&#x27;s not knowing where you stand with them.</p>
+<p>Still, I&#x27;m not asking you to force anything. I&#x27;m not asking you to suddenly drop every wall you&#x27;ve built. I just want to be somewhere in your life where, eventually, you feel safe enough to let me be myself with you.</p>
+<p>Whatever happens, I hope you know that when I say I genuinely like you, I mean it.</p>
+<p>You don&#x27;t have to be perfect for me to think you&#x27;re worth getting to know.</p>
+<p>— Yours, maybe someday.</p>
+    <div class="music">
+      <button onclick="playMusic()">♫ Play Jaded</button>
+      <div class="player" id="player"></div>
+    </div>
+    <div class="end">Whatever happens, I'm glad I met you.</div>
+  </article>
+</div>
+<script>
+function openLetter(){
+ const e=document.getElementById('env'), l=document.getElementById('letter');
+ e.classList.add('open');
+ setTimeout(()=>{e.style.display='none';l.style.display='block';},650);
+ for(let i=0;i<18;i++){
+  const h=document.createElement('div');h.className='heart';h.textContent=['♡','♥','✦'][i%3];
+  h.style.left=Math.random()*100+'vw';h.style.fontSize=(14+Math.random()*18)+'px';
+  h.style.animationDelay=(Math.random()*1.5)+'s';document.body.appendChild(h);
+  setTimeout(()=>h.remove(),7500);
+ }
+}
+</script>
+</body>
+</html>
