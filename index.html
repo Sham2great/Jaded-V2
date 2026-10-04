@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>For Jade ♡</title>
+<title>For Ayli ♡</title>
 <style>
 *{box-sizing:border-box} body{margin:0;min-height:100vh;background:radial-gradient(circle at top,#4b2639,#171018 65%);color:#f8edf2;font-family:Georgia,serif;overflow-x:hidden}
 .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
@@ -25,7 +25,7 @@
 @keyframes float{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
 .open .flap{transform:rotateX(180deg);z-index:1} .open .seal{opacity:0} .open{transform:translateY(20px) scale(.94);opacity:0}
 @media(max-width:500px){.letter{padding:28px 21px}.letter p{font-size:16px}}
-</style>
+.memories{margin-top:45px;padding-top:30px;border-top:1px solid #ead5dd}.memories h2{text-align:center;color:#7d304e;margin:0 0 6px;font-size:24px}.sub{text-align:center;color:#8b7079;font-size:14px!important}.polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:22px;margin:25px 0}.polaroid{width:145px;background:#fff;border:0;padding:10px 10px 14px;box-shadow:0 10px 20px #0003;cursor:pointer;transform:rotate(-4deg);transition:.3s;font-family:Georgia,serif;color:#35242c}.polaroid:nth-child(even){transform:rotate(5deg)}.polaroid:hover,.polaroid:focus{transform:translateY(-7px) rotate(0deg);outline:2px solid #a74766}.cover{display:grid;place-items:center;height:125px;background:linear-gradient(145deg,#171018,#6d3049);color:#fff;font-size:18px;font-weight:bold;padding:12px}.polaroid small{display:block;margin-top:9px;font-size:13px}.reveal{text-align:center;font-style:italic;color:#7d304e;min-height:48px;line-height:1.5;padding:8px 15px}.p2{background:#fff}.p3{background:#fff}.p4{background:#fff}.p5{background:#fff}@media(max-width:500px){.polaroid{width:130px}.cover{height:112px;font-size:16px}}\n</style>
 </head>
 <body>
 <div class="wrap">
@@ -34,24 +34,33 @@
     <div class="hint">TAP TO OPEN</div>
   </div>
   <article class="letter" id="letter">
-    <h1>For Jade ♡</h1>
-    <p>Jade,</p>
-<p>I don&#x27;t really know what to call what I feel for you yet. I just know that I genuinely like you, and that&#x27;s something I haven&#x27;t felt in a while.</p>
-<p>I know you&#x27;ve been hurt, and I understand why you&#x27;ve built walls around yourself. When you&#x27;ve been disappointed enough times, keeping people at a distance can feel safer than giving someone the chance to hurt you again. I don&#x27;t want to rush you through that, and I don&#x27;t want you to feel like you owe me your trust.</p>
-<p>I just want the chance to show you who I actually am.</p>
-<p>I&#x27;m not perfect, but I know my intentions with you are genuine. I&#x27;m not here because I want something temporary or because I want to prove I&#x27;m different from every guy who&#x27;s hurt you. I just genuinely enjoy you. There&#x27;s something about you that makes me want to stay and see where this could go.</p>
-<p>And maybe that&#x27;s why the uncertainty scares me too. I can be patient. I can be honest. I can show you that I&#x27;m someone you can trust. But I still don&#x27;t know if, one day, you&#x27;ll choose to let me a little closer.</p>
-<p>Maybe that&#x27;s why Drake&#x27;s “Jaded” hits differently to me — because sometimes the hardest part isn&#x27;t caring about someone, it&#x27;s not knowing where you stand with them.</p>
-<p>Still, I&#x27;m not asking you to force anything. I&#x27;m not asking you to suddenly drop every wall you&#x27;ve built. I just want to be somewhere in your life where, eventually, you feel safe enough to let me be myself with you.</p>
-<p>Whatever happens, I hope you know that when I say I genuinely like you, I mean it.</p>
-<p>You don&#x27;t have to be perfect for me to think you&#x27;re worth getting to know.</p>
-<p>— Yours, maybe someday.</p>
+    <h1>For Ayli ♡</h1>
+    <p>Ayli,</p>
+<p>Out of everyone I could have met, somehow my mind keeps choosing you.</p>
+<p>I don’t know if there’s a path that ever leads to us, or if I’m only standing at the beginning of a road that was never meant to reach you.</p>
+<p>But if I could choose, I wouldn’t choose someone else just because they’re possible.</p>
+<p>I’d choose you.</p>
+<p>Even with the uncertainty, even knowing there are things I can’t change, part of me still hopes that somehow, someday, it could actually be you.</p>
+<p>And maybe that’s the hardest part, wanting something so specifically when you have no idea if it can ever exist.</p>
+<p>So I’m not asking you for an answer. I just wanted you to know that if there were a choice I could make, I already know who I’d choose.</p>
 <audio id="music" src="Jaded%20(1).mp3" preload="auto"></audio>
 <div class="music">
       <button onclick="playMusic()">♫ Play Jaded</button>
       <div class="player" id="player"></div>
     </div>
-    <div class="end">Whatever happens, I'm glad I met you.</div>
+    <section class="memories">
+<h2>songs that say what I can’t</h2>
+<p class="sub">Tap a Polaroid.</p>
+<div class="polaroids">
+<button class="polaroid p1" data-msg="Somehow, even with all the uncertainty, you’re still the person my mind comes back to."><span class="cover">Take Care</span><small>Drake</small></button>
+<button class="polaroid p2" data-msg="I don’t know where this goes, but part of me still wishes the answer could be you."><span class="cover">Nothing Was the Same</span><small>Drake</small></button>
+<button class="polaroid p3" data-msg="Maybe the hardest thing is wanting something I can’t promise will ever be possible."><span class="cover">Views</span><small>Drake</small></button>
+<button class="polaroid p4" data-msg="If I had to choose between what is easy and what I actually want, I already know my answer."><span class="cover">Her Loss</span><small>Drake</small></button>
+<button class="polaroid p5" data-msg="I’m not trying to force a future. I just can’t pretend I don’t want you in mine."><span class="cover">For All the Dogs</span><small>Drake</small></button>
+</div>
+div class="reveal" id="reveal">Tap a Polaroid to reveal its note.</div>
+</section>
+<div class="end">I don’t know if it can be you. I just know I want it to be.</div>
   </article>
 </div>
 <script>
@@ -66,6 +75,7 @@ function openLetter(){
   setTimeout(()=>h.remove(),7500);
  }
 }
+document.querySelectorAll('.polaroid').forEach(card=>card.addEventListener('click',()=>{document.getElementById('reveal').textContent=card.dataset.msg;}));
 </script>
 </body>
 </html>
