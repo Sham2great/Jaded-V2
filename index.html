@@ -10,7 +10,7 @@ html{scroll-behavior:smooth}
 body{
   margin:0;min-height:100vh;overflow-x:hidden;
   background:
-    radial-gradient(circle at 50% 15%,#6a354d 0%,#321b29 34%,#160f15 78%);
+    radial-gradient(circle at 50% 15%,#f7b6cf 0%,#ee8fb3 34%,#b94f7b 78%);
   color:#f8edf2;font-family:Georgia,serif;
 }
 body:before{
@@ -20,7 +20,7 @@ body:before{
 }
 .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;z-index:2}
 .ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
-.glow{position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(80px);background:#b45c7c33;animation:glow 7s ease-in-out infinite}
+.glow{position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(80px);background:#ffffff55;animation:glow 7s ease-in-out infinite}
 .g1{left:-130px;top:18%}.g2{right:-130px;bottom:8%;animation-delay:2s}
 
 .envelope{
@@ -30,29 +30,29 @@ body:before{
   animation:floatEnvelope 4s ease-in-out infinite;
 }
 .env{
-  position:absolute;inset:0;background:linear-gradient(145deg,#8d3857,#63233e);
+  position:absolute;inset:0;background:linear-gradient(145deg,#f08bb2,#d75d8b);
   border-radius:12px;overflow:hidden;border:1px solid #d47b9a55;
   box-shadow:inset 0 1px 0 #fff2;
 }
 .env:before,.env:after{
   content:"";position:absolute;bottom:0;width:75%;height:100%;
-  background:linear-gradient(145deg,#a44969,#7a2d4c);
+  background:linear-gradient(145deg,#f5a1c0,#df6d99);
 }
 .env:before{left:-20%;transform:skewY(32deg);transform-origin:bottom left}
 .env:after{right:-20%;transform:skewY(-32deg);transform-origin:bottom right}
 .flap{
   position:absolute;z-index:3;left:0;top:0;width:0;height:0;
   border-left:220px solid transparent;border-right:220px solid transparent;
-  border-top:150px solid #b34e70;transform-origin:top;
+  border-top:150px solid #f6a4c2;transform-origin:top;
   transition:1s cubic-bezier(.2,.8,.2,1);
   filter:drop-shadow(0 4px 3px #0003);
 }
 .seal{
   position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);
   width:64px;height:64px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%,#fff5f8,#d59bad 65%,#a75d78);
-  display:grid;place-items:center;color:#722945;font-size:27px;
-  box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff16;
+  background:radial-gradient(circle at 35% 30%,#fff7fa,#f7b8ce 65%,#a75d78);
+  display:grid;place-items:center;color:#a52f61;font-size:27px;
+  box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff44;
   transition:.6s;animation:sealPulse 2.5s ease-in-out infinite;
 }
 .hint{
@@ -65,7 +65,7 @@ body:before{
 .open{animation:none;transform:translateY(25px) scale(.96)}
 .paper{
   position:absolute;z-index:2;left:8%;right:8%;top:28px;height:225px;
-  background:#fff9fb;border-radius:5px;color:#6e2c46;
+  background:#fff9fc;border-radius:5px;color:#6e2c46;
   transform:translateY(70px);opacity:.18;
   transition:1s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 20px #0004;
 }
@@ -73,7 +73,7 @@ body:before{
 
 .letter{
   display:none;max-width:760px;width:100%;
-  background:linear-gradient(145deg,#fffafd,#fff5f8);
+  background:linear-gradient(145deg,#fffafd,#fff7fa);
   color:#35242c;border-radius:22px;padding:42px 32px;
   box-shadow:0 30px 80px #000b,0 0 0 1px #fff8;
   animation:rise 1s cubic-bezier(.2,.8,.2,1);
@@ -81,22 +81,22 @@ body:before{
 }
 .letter:before{
   content:"";position:absolute;inset:-100px;
-  background:radial-gradient(circle at 10% 20%,#d98aa322,transparent 28%),radial-gradient(circle at 90% 80%,#7d304e18,transparent 30%);
+  background:radial-gradient(circle at 10% 20%,#d98aa322,transparent 28%),radial-gradient(circle at 90% 80%,#b8326b18,transparent 30%);
   pointer-events:none;
 }
 .letter>*{position:relative;z-index:1}
-.letter h1{font-size:38px;margin:0 0 26px;color:#7d304e;text-align:center}
+.letter h1{font-size:38px;margin:0 0 26px;color:#b8326b;text-align:center}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
 .music{text-align:center;margin:25px 0 5px}
 .music button{
-  border:0;border-radius:999px;padding:12px 20px;background:#7d304e;color:white;
-  font-weight:700;cursor:pointer;box-shadow:0 8px 20px #7d304e33;transition:.25s;
+  border:0;border-radius:999px;padding:12px 20px;background:#b8326b;color:white;
+  font-weight:700;cursor:pointer;box-shadow:0 8px 20px #b8326b33;transition:.25s;
 }
-.music button:hover{transform:translateY(-2px);box-shadow:0 12px 25px #7d304e44}
+.music button:hover{transform:translateY(-2px);box-shadow:0 12px 25px #b8326b44}
 .player{font:12px system-ui;color:#8b7079;margin-top:8px;min-height:16px}
 
 .memories{margin-top:48px;padding-top:34px;border-top:1px solid #ead5dd}
-.memories h2{text-align:center;color:#7d304e;margin:0 0 7px;font-size:25px}
+.memories h2{text-align:center;color:#b8326b;margin:0 0 7px;font-size:25px}
 .sub{text-align:center;color:#8b7079;font-size:14px!important;margin-bottom:25px!important}
 .polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
 .polaroid{
@@ -115,18 +115,18 @@ body:before{
 }
 .polaroid:hover,.polaroid:focus{
   transform:translateY(-12px) rotate(0deg) scale(1.04);
-  outline:2px solid #b45c7c55;box-shadow:0 22px 35px #0004;
+  outline:2px solid #e85d95aa;box-shadow:0 22px 35px #0004;
 }
 .cover{
   display:block;width:100%;aspect-ratio:1/1;object-fit:cover;
-  background:#171018;border-radius:1px;
+  background:#6f2447;border-radius:1px;
 }
 .polaroid small{display:block;margin-top:10px;font-size:13px;letter-spacing:.3px}
 .reveal{
-  text-align:center;font-style:italic;color:#7d304e;min-height:52px;
+  text-align:center;font-style:italic;color:#b8326b;min-height:52px;
   line-height:1.6;padding:18px 18px 5px;transition:.35s;
 }
-.end{text-align:center;margin-top:32px;color:#7d304e;font-size:15px;line-height:1.6}
+.end{text-align:center;margin-top:32px;color:#b8326b;font-size:15px;line-height:1.6}
 
 .tulip-field{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .tulip{
@@ -156,14 +156,14 @@ body:before{
   animation:fall linear forwards;z-index:3;
 }
 .heart{
-  position:fixed;bottom:-30px;color:#eeb8ca;
+  position:fixed;bottom:-30px;color:#ffd0e2;
   animation:float 6s linear forwards;pointer-events:none;z-index:4;
 }
 @keyframes rise{from{opacity:0;transform:translateY(45px) scale(.98)}to{opacity:1;transform:none}}
 @keyframes float{to{transform:translateY(-110vh) rotate(30deg);opacity:0}}
 @keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}
 @keyframes floatEnvelope{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes sealPulse{0%,100%{box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff16}50%{box-shadow:0 8px 25px #0005,0 0 0 9px #ffffff10}}
+@keyframes sealPulse{0%,100%{box-shadow:0 8px 22px #0005,0 0 0 5px #ffffff44}50%{box-shadow:0 8px 25px #0005,0 0 0 9px #ffffff10}}
 @keyframes hintPulse{0%,100%{opacity:.7}50%{opacity:1}}
 @keyframes glow{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:.9}}
 @keyframes sway{0%,100%{rotate:-2deg}50%{rotate:3deg}}
@@ -179,10 +179,24 @@ body:before{
 <div class="ambient"><div class="glow g1"></div><div class="glow g2"></div></div>
 
 <div class="tulip-field">
-  <div class="tulip t1"><i></i><b></b></div><div class="tulip t2"><i></i><b></b></div>
-  <div class="tulip t3"><i></i><b></b></div><div class="tulip t4"><i></i><b></b></div>
-  <div class="tulip t5"><i></i><b></b></div><div class="tulip t6"><i></i><b></b></div>
-  <div class="tulip t7"><i></i><b></b></div><div class="tulip t8"><i></i><b></b></div>
+  <div class="tulip t1"><i></i><b></b></div>
+  <div class="tulip t2"><i></i><b></b></div>
+  <div class="tulip t3"><i></i><b></b></div>
+  <div class="tulip t4"><i></i><b></b></div>
+  <div class="tulip t5"><i></i><b></b></div>
+  <div class="tulip t6"><i></i><b></b></div>
+  <div class="tulip t7"><i></i><b></b></div>
+  <div class="tulip t8"><i></i><b></b></div>
+  <div class="tulip t9"><i></i><b></b></div>
+  <div class="tulip t10"><i></i><b></b></div>
+  <div class="tulip t11"><i></i><b></b></div>
+  <div class="tulip t12"><i></i><b></b></div>
+  <div class="tulip t13"><i></i><b></b></div>
+  <div class="tulip t14"><i></i><b></b></div>
+  <div class="tulip t15"><i></i><b></b></div>
+  <div class="tulip t16"><i></i><b></b></div>
+  <div class="tulip t17"><i></i><b></b></div>
+  <div class="tulip t18"><i></i><b></b></div>
 </div>
 
 <div class="wrap">
@@ -246,6 +260,8 @@ body:before{
 <script>
 let opened=false;
 function openLetter(){
+  if(opened)return;
+  opened=true;
   if(opened)return;
   opened=true;
   const e=document.getElementById('env');
