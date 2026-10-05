@@ -185,7 +185,27 @@ body:before{
   .letter{padding:32px 22px}.letter p{font-size:16px}
   .polaroid{width:135px}.envelope{height:260px}.flap{border-left-width:200px;border-right-width:200px;border-top-width:138px}
 }
-</style>
+<style>
+.page2{display:none;min-height:100vh;position:relative;padding:70px 22px 90px;box-sizing:border-box;overflow:hidden;background:radial-gradient(circle at 50% 30%,#f8dce7 0%,#b75b7d 48%,#35101f 100%);color:#fff;opacity:0}
+.page2.show{display:flex;animation:pageReveal 1.7s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes pageReveal{0%{opacity:0;transform:scale(1.12);filter:blur(18px)}45%{opacity:1;filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+.page2:before{content:"";position:absolute;inset:-30%;background:conic-gradient(from 0deg,transparent,#fff2 10%,transparent 22%,#ffd8e5 30%,transparent 43%,#fff1 58%,transparent 76%);animation:spinGlow 14s linear infinite}
+@keyframes spinGlow{to{transform:rotate(360deg)}}
+.page2-inner{position:relative;z-index:2;width:min(900px,100%);margin:auto;text-align:center}
+.page2-kicker{font:600 12px 'Trebuchet MS',sans-serif;letter-spacing:5px;text-transform:uppercase;opacity:.75}
+.page2 h2{font:italic 48px Georgia,serif;margin:14px 0 45px;text-shadow:0 0 30px #ffd8e588}
+.verse{margin:0 auto 34px;padding:25px 24px;border:1px solid #fff5;border-radius:20px;background:#240b1655;backdrop-filter:blur(9px);box-shadow:0 20px 55px #1a061233;transition:.45s}
+.verse:hover{transform:translateY(-7px) scale(1.015);background:#3b132555;border-color:#fff8}
+.verse p{font:italic 21px/1.65 Georgia,serif;margin:0 0 10px}
+.verse small{font:600 11px 'Trebuchet MS',sans-serif;letter-spacing:2px;opacity:.72}
+.page2-close{margin-top:22px;color:#fff;background:#ffffff18;border:1px solid #fff6;border-radius:999px;padding:13px 23px;font:600 12px 'Trebuchet MS',sans-serif;letter-spacing:2px;cursor:pointer;transition:.3s}
+.page2-close:hover{background:#fff;color:#5d2038;transform:scale(1.05)}
+.skip-page{display:block;margin:28px auto 0;border:0;background:transparent;color:#8f315d;font:600 11px 'Trebuchet MS',sans-serif;letter-spacing:2px;text-transform:uppercase;cursor:pointer;opacity:.7;transition:.3s}
+.skip-page:hover{opacity:1;letter-spacing:3px}
+.page2-heart{position:absolute;opacity:.25;font-size:30px;animation:pageHeart 8s linear infinite}
+@keyframes pageHeart{0%{transform:translateY(110vh) rotate(0);opacity:0}15%{opacity:.35}100%{transform:translateY(-20vh) rotate(360deg);opacity:0}}
+@media(max-width:600px){.page2 h2{font-size:38px}.verse p{font-size:18px}.page2{padding-top:55px}}
+</style></style>
 </head>
 <body>
 <div class="ambient"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div><div class="ribbon"></div>
@@ -265,8 +285,19 @@ body:before{
       <div class="reveal" id="reveal">Tap a Polaroid to reveal its note.</div>
     </section>
 
-    <div class="end">I don’t know if it can be you. I just know I want it to be.</div>
+    <div class="end">I don’t know if it can be you. I just know I want it to be.</div><button class="skip-page" id="skipPage">Skip to the next page ✦</button>
   </article>
+<section class="page2" id="page2">
+  <div class="page2-inner">
+    <div class="page2-kicker">What love asks us to remember</div>
+    <h2>Some things are worth praying over.</h2>
+    <div class="verse"><p>“And now abideth faith, hope, charity, these three; but the greatest of these is charity.”</p><small>1 Corinthians 13:13</small></div>
+    <div class="verse"><p>“Let all your things be done with charity.”</p><small>1 Corinthians 16:14</small></div>
+    <div class="verse"><p>“Above all things have fervent charity among yourselves: for charity shall cover the multitude of sins.”</p><small>1 Peter 4:8</small></div>
+    <div class="verse"><p>“My beloved is mine, and I am his.”</p><small>Song of Solomon 2:16</small></div>
+    <button class="page2-close" id="backToLetter">↩ Back to the letter</button>
+  </div>
+</section>
 </div>
 
 <script>
@@ -344,5 +375,21 @@ document.querySelectorAll('.polaroid').forEach(card=>{
   });
 });
 </script>
-</body>
+<script>
+const skipPage=document.getElementById('skipPage');
+const page2=document.getElementById('page2');
+skipPage.addEventListener('click',()=>{
+  document.body.classList.add('transitioning');
+  sparkle(window.innerWidth/2,window.innerHeight/2);
+  heartRain(45);
+  setTimeout(()=>{
+    page2.classList.add('show');
+    page2.scrollIntoView({behavior:'smooth',block:'start'});
+  },500);
+});
+document.getElementById('backToLetter').addEventListener('click',()=>{
+  page2.classList.remove('show');
+  setTimeout(()=>document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'}),100);
+});
+</script></body>
 </html>
