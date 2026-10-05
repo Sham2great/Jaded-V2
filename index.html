@@ -291,10 +291,10 @@ body:before{
   <div class="page2-inner">
     <div class="page2-kicker">What love asks us to remember</div>
     <h2>Some things are worth praying over.</h2>
-    <div class="verse"><p>“And now abideth faith, hope, charity, these three; but the greatest of these is charity.”</p><small>1 Corinthians 13:13</small></div>
-    <div class="verse"><p>“Let all your things be done with charity.”</p><small>1 Corinthians 16:14</small></div>
-    <div class="verse"><p>“Above all things have fervent charity among yourselves: for charity shall cover the multitude of sins.”</p><small>1 Peter 4:8</small></div>
-    <div class="verse"><p>“My beloved is mine, and I am his.”</p><small>Song of Solomon 2:16</small></div>
+    <div class="verse"><p>“Set me as a seal upon thine heart, as a seal upon thine arm: for love is strong as death.”</p><small>Song of Solomon 8:6</small></div>
+    <div class="verse"><p>“Many waters cannot quench love, neither can the floods drown it.”</p><small>Song of Solomon 8:7</small></div>
+    <div class="verse"><p>“I am my beloved’s, and my beloved is mine.”</p><small>Song of Solomon 6:3</small></div>
+    <div class="verse"><p>“He brought me to the banqueting house, and his banner over me was love.”</p><small>Song of Solomon 2:4</small></div>
     <button class="page2-close" id="backToLetter">↩ Back to the letter</button>
   </div>
 </section>
@@ -389,7 +389,10 @@ skipPage.addEventListener('click',()=>{
 });
 document.getElementById('backToLetter').addEventListener('click',()=>{
   page2.classList.remove('show');
-  setTimeout(()=>document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'}),100);
+  page2.style.display='none';
+  document.getElementById('letter').style.display='block';
+  document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'});
+  setTimeout(()=>page2.style.display='',900);
 });
 </script></body>
 </html>
