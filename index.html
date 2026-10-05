@@ -310,9 +310,9 @@ body:before{
     <p>Because out of everyone I could have met, somehow, it’s still you that makes me wonder what something different could feel like.</p>
     <p>And if I ever got the choice to find out, I already know who I’d want to try with.</p>
 
-    <audio id="music" src="Jaded%20(1).mp3" preload="auto"></audio>
+    <audio id="music" src="Drake%20-%20Pipe%20Down%20(Audio).mp3" preload="auto"></audio>
     <div class="music">
-      <button id="musicBtn" onclick="toggleMusic(event)">♫ Play Jaded</button>
+      <button id="musicBtn" onclick="toggleMusic(event)">♫ Play Pipe Down</button>
       <div class="player" id="player"></div>
     </div>
 
@@ -414,7 +414,7 @@ function openLetter(){
   const music=document.getElementById('music');
   music.currentTime=0;
   const playAttempt=music.play();
-  if(playAttempt){playAttempt.then(()=>{document.getElementById('musicBtn').textContent='Ⅱ Pause Jaded';document.getElementById('player').textContent='Now playing'}).catch(()=>{document.getElementById('player').textContent='Tap Play Jaded if your browser blocks autoplay.'});}
+  if(playAttempt){playAttempt.then(()=>{document.getElementById('musicBtn').textContent='Ⅱ Pause Pipe Down';document.getElementById('player').textContent='Now playing'}).catch(()=>{document.getElementById('player').textContent='Tap Play Jaded if your browser blocks autoplay.'});}
   setTimeout(()=>{
     e.style.display='none';
     const letter=document.getElementById('letter');
