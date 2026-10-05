@@ -81,6 +81,11 @@ body:before{
 .paper-inner p{font:14px/1.45 Georgia,serif;margin:0 0 8px}
 .paper-verse{margin:11px 0 0;padding:9px 10px;border-top:1px solid #e7cbd6;border-bottom:1px solid #e7cbd6;font:italic 12px/1.4 Georgia,serif;color:#71304b}
 .paper-verse small{display:block;margin-top:4px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:1px;color:#9a6176}
+
+.paper-echo{position:absolute;z-index:3;pointer-events:none;left:12%;right:12%;top:0;bottom:0;overflow:hidden}
+.paper-echo span{position:absolute;max-width:42%;font:italic 11px/1.35 Georgia,serif;color:#9b5a75;opacity:0;text-shadow:0 1px 8px #fff;animation:paperEcho 3.4s ease-in-out forwards}
+.paper-echo span:nth-child(1){left:4%;top:18%;animation-delay:.7s}.paper-echo span:nth-child(2){right:2%;top:35%;animation-delay:3.8s}.paper-echo span:nth-child(3){left:8%;bottom:23%;animation-delay:6.9s}.paper-echo span:nth-child(4){right:5%;bottom:14%;animation-delay:10s}.paper-echo span:nth-child(5){left:30%;top:8%;animation-delay:13.1s}
+@keyframes paperEcho{0%{opacity:0;transform:translateY(8px)}22%{opacity:.72;transform:translateY(0)}72%{opacity:.72;transform:translateY(-2px)}100%{opacity:0;transform:translateY(-8px)}}
 .paper-hint{margin-top:10px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:2px;text-transform:uppercase;color:#a15a75}
 
 
@@ -259,6 +264,13 @@ body:before{
         <p>Before you read anything else, I wanted you to know who my heart keeps choosing.</p>
         <div class="paper-verse">“Many waters cannot quench love, neither can the floods drown it.”<small>Song of Solomon 8:7</small></div>
         <div class="paper-verse">“Set me as a seal upon thine heart...”<small>Song of Solomon 8:6</small></div>
+        <div class="paper-echo" aria-hidden="true">
+          <span>somewhere between...</span>
+          <span>maybe it could be...</span>
+          <span>if we tried...</span>
+          <span>something different.</span>
+          <span>what if we just found out?</span>
+        </div>
         <div class="paper-hint">Open the letter below to read the rest</div>
       </div>
     </div>
