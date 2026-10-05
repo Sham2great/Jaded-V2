@@ -100,7 +100,13 @@ body:before{
   pointer-events:none;
 }
 .letter>*{position:relative;z-index:1}
-.letter.reveal-letter{opacity:1;transform:translateY(0) scale(1)}
+.letter.reveal-letter{opacity:1;transform:translateY(0) scale(1);animation:letterUnfold 1.7s cubic-bezier(.16,1,.3,1) both}
+@keyframes letterUnfold{
+  0%{opacity:0;transform:translateY(45px) scale(.82);clip-path:inset(0 0 92% 0 round 24px);filter:blur(5px)}
+  45%{opacity:1;transform:translateY(8px) scale(1.015);clip-path:inset(0 0 35% 0 round 24px);filter:blur(1px)}
+  72%{transform:translateY(-3px) scale(.995);clip-path:inset(0 0 8% 0 round 24px);filter:blur(0)}
+  100%{opacity:1;transform:translateY(0) scale(1);clip-path:inset(0 0 0 0 round 24px);filter:blur(0)}
+}
 .letter h1{font-size:46px;margin:0 0 28px;color:#8f315d;text-align:center;font-family:Georgia,serif;font-style:italic}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
 .music{text-align:center;margin:25px 0 5px}
@@ -370,8 +376,9 @@ function openLetter(){
     e.style.display='none';
     const letter=document.getElementById('letter');
     letter.style.display='block';
+    window.scrollTo({top:0,behavior:'instant'});
     requestAnimationFrame(()=>requestAnimationFrame(()=>letter.classList.add('reveal-letter')));
-    setTimeout(()=>letter.scrollIntoView({behavior:'smooth',block:'center'}),180);
+    setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),80);
   },15000);
 }
 heartRain(10);setInterval(()=>heartRain(2),7000);
