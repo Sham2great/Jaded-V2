@@ -412,9 +412,19 @@ function openLetter(){
   }
 
   const music=document.getElementById('music');
+  const btn=document.getElementById('musicBtn');
+  const player=document.getElementById('player');
   music.currentTime=0;
+  music.muted=false;
   const playAttempt=music.play();
-  if(playAttempt){playAttempt.then(()=>{document.getElementById('musicBtn').textContent='Ⅱ Pause Pipe Down';document.getElementById('player').textContent='Now playing'}).catch(()=>{document.getElementById('player').textContent='Tap Play Jaded if your browser blocks autoplay.'});}
+  if(playAttempt){
+    playAttempt.then(()=>{
+      btn.textContent='Ⅱ Pause Pipe Down';
+      player.textContent='Now playing';
+    }).catch(()=>{
+      player.textContent='Tap Play Pipe Down to start the song.';
+    });
+  }
   setTimeout(()=>{
     e.style.display='none';
     const letter=document.getElementById('letter');
@@ -432,14 +442,14 @@ function toggleMusic(event){
   const player=document.getElementById('player');
   if(music.paused){
     music.play().then(()=>{
-      btn.textContent='Ⅱ Pause Jaded';
+      btn.textContent='Ⅱ Pause Pipe Down';
       player.textContent='Now playing';
     }).catch(()=>{
       player.textContent='Tap again to play the song.';
     });
   }else{
     music.pause();
-    btn.textContent='♫ Play Jaded';
+    btn.textContent='♫ Play Pipe Down';
     player.textContent='';
   }
 }
@@ -455,6 +465,18 @@ document.querySelectorAll('.polaroid').forEach(card=>{
 });
 </script>
 <script>
+const music=document.getElementById('music');
+let musicStarted=false;
+function startMusicFromGesture(){
+  if(musicStarted)return;
+  music.currentTime=0;
+  music.play().then(()=>{
+    musicStarted=true;
+    document.getElementById('musicBtn').textContent='Ⅱ Pause Pipe Down';
+    document.getElementById('player').textContent='Now playing';
+  }).catch(()=>{});
+}
+document.addEventListener('pointerdown',startMusicFromGesture,{once:true});
 const envelope=document.getElementById('env');
 envelope.addEventListener('click',openLetter);
 const skipPage=document.getElementById('skipPage');
