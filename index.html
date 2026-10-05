@@ -9,9 +9,8 @@
 html{scroll-behavior:smooth}
 body{
   margin:0;min-height:100vh;overflow-x:hidden;
-  background:
-    radial-gradient(circle at 50% 8%,#fff6fb 0%,#ffd9e9 24%,#f7a9c8 58%,#ee86b1 100%);
-  color:#7a3653;font-family:Georgia,serif;
+  background:radial-gradient(circle at 50% 5%,#fff8fb 0%,#f1d2df 28%,#c8799c 65%,#6f2949 100%);
+  color:#422334;font-family:'Trebuchet MS',Arial,sans-serif;
 }
 body:before{
   content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
@@ -79,7 +78,7 @@ body:before{
 .letter{
   display:none;max-width:760px;width:100%;
   background:linear-gradient(145deg,#fffafd,#fff7fa);
-  color:#35242c;border-radius:22px;padding:42px 32px;
+  color:#30202a;border-radius:24px;padding:44px 34px;
   box-shadow:0 30px 80px #000b,0 0 0 1px #fff8;
   animation:rise 1s cubic-bezier(.2,.8,.2,1);
   position:relative;overflow:hidden;
@@ -90,18 +89,18 @@ body:before{
   pointer-events:none;
 }
 .letter>*{position:relative;z-index:1}
-.letter h1{font-size:38px;margin:0 0 26px;color:#b8326b;text-align:center}
+.letter h1{font-size:46px;margin:0 0 28px;color:#8f315d;text-align:center;font-family:Georgia,serif;font-style:italic}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
 .music{text-align:center;margin:25px 0 5px}
 .music button{
-  border:0;border-radius:999px;padding:12px 20px;background:#b8326b;color:white;
+  border:0;border-radius:999px;padding:12px 20px;background:#8f315d;color:white;
   font-weight:700;cursor:pointer;box-shadow:0 8px 20px #b8326b33;transition:.25s;
 }
 .music button:hover{transform:translateY(-2px);box-shadow:0 12px 25px #b8326b44}
 .player{font:12px system-ui;color:#8b7079;margin-top:8px;min-height:16px}
 
 .memories{margin-top:48px;padding-top:34px;border-top:1px solid #ead5dd}
-.memories h2{text-align:center;color:#b8326b;margin:0 0 7px;font-size:25px}
+.memories h2{text-align:center;color:#8f315d;margin:0 0 7px;font-size:28px;font-family:Georgia,serif;font-style:italic}
 .sub{text-align:center;color:#8b7079;font-size:14px!important;margin-bottom:25px!important}
 .polaroids{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
 .polaroid{
@@ -128,10 +127,10 @@ body:before{
 }
 .polaroid small{display:block;margin-top:10px;font-size:13px;letter-spacing:.3px}
 .reveal{
-  text-align:center;font-style:italic;color:#b8326b;min-height:52px;
+  text-align:center;font-style:italic;color:#8f315d;min-height:52px;
   line-height:1.6;padding:18px 18px 5px;transition:.35s;
 }
-.end{text-align:center;margin-top:32px;color:#b8326b;font-size:15px;line-height:1.6;font-weight:700;text-shadow:0 0 18px #f6a2c6}
+.end{text-align:center;margin-top:32px;color:#8f315d;font-size:16px;font-family:Georgia,serif;font-style:italic;line-height:1.6;font-weight:700;text-shadow:0 0 18px #f6a2c6}
 .end:after{content:' ✦ ♡ ✦ ';display:block;font-size:25px;margin-top:12px;animation:twinkle 1.5s infinite}
 .polaroid{transform-style:preserve-3d}
 .polaroid .cover{transition:.4s}
@@ -273,14 +272,17 @@ body:before{
 <script>
 let opened=false;
 const sparkleChars=['✦','✧','♡','⋆','✿'];
-function burst(x,y){for(let i=0;i<9;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=sparkleChars[i%sparkleChars.length];s.style.left=(x+(Math.random()*100-50))+'px';s.style.top=(y+(Math.random()*70-35))+'px';s.style.animationDelay=(Math.random()*.15)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1500)}}
-document.addEventListener('click',e=>burst(e.clientX,e.clientY));
+function sparkle(x,y){for(let i=0;i<14;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=sparkleChars[i%sparkleChars.length];s.style.left=(x+(Math.random()*100-50))+'px';s.style.top=(y+(Math.random()*70-35))+'px';s.style.animationDelay=(Math.random()*.15)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1500)}}
+document.addEventListener('click',e=>sparkle(e.clientX,e.clientY));
+function heartRain(count=35){for(let i=0;i<count;i++){const h=document.createElement('div');h.className='heart';h.textContent=['♡','♥','✦'][i%3];h.style.left=Math.random()*100+'vw';h.style.fontSize=(12+Math.random()*24)+'px';h.style.animationDuration=(5+Math.random()*6)+'s';h.style.animationDelay=(Math.random()*2)+'s';h.style.setProperty('--drift',(Math.random()*160-80)+'px');document.body.appendChild(h);setTimeout(()=>h.remove(),13000)}}
 function openLetter(){
   if(opened)return;
   opened=true;
   const e=document.getElementById('env');
   e.classList.add('open');
+  sparkle(window.innerWidth/2,window.innerHeight/2);
 
+  heartRain(55);
   for(let i=0;i<22;i++){
     const h=document.createElement('div');
     h.className='heart';
@@ -304,12 +306,15 @@ function openLetter(){
     setTimeout(()=>p.remove(),12000);
   }
 
+  const music=document.getElementById('music');
+  music.play().then(()=>{document.getElementById('musicBtn').textContent='Ⅱ Pause Jaded';document.getElementById('player').textContent='Now playing'}).catch(()=>{});
   setTimeout(()=>{
     e.style.display='none';
     document.getElementById('letter').style.display='block';
     document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'});
   },950);
 }
+heartRain(10);setInterval(()=>heartRain(2),7000);
 function toggleMusic(event){
   event.stopPropagation();
   const music=document.getElementById('music');
