@@ -28,7 +28,7 @@ body:before{
 .g3{width:260px;height:260px;left:42%;top:45%;background:#fff8d9;animation-delay:1s}
 
 .envelope{
-  width:min(440px,92vw);height:285px;position:relative;cursor:pointer;
+  width:min(470px,92vw);height:340px;position:relative;cursor:pointer;
   filter:drop-shadow(0 25px 45px #000b);
   transition:1s cubic-bezier(.2,.8,.2,1);
   animation:floatEnvelope 4s ease-in-out infinite;
@@ -46,8 +46,8 @@ body:before{
 .env:after{right:-20%;transform:skewY(-32deg);transform-origin:bottom right}
 .flap{
   position:absolute;z-index:3;left:0;top:0;width:0;height:0;
-  border-left:220px solid transparent;border-right:220px solid transparent;
-  border-top:150px solid #f6a4c2;transform-origin:top;
+  border-left:235px solid transparent;border-right:235px solid transparent;
+  border-top:170px solid #f6a4c2;transform-origin:top;
   transition:1s cubic-bezier(.2,.8,.2,1);
   filter:drop-shadow(0 4px 3px #0003);
 }
@@ -68,12 +68,19 @@ body:before{
 .open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4)}
 .open{animation:none;transform:translateY(25px) scale(.96)}
 .paper{
-  position:absolute;z-index:2;left:8%;right:8%;top:28px;height:225px;
-  background:#fff9fc;border-radius:5px;color:#6e2c46;
-  transform:translateY(70px);opacity:.18;
-  transition:1s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 20px #0004;
+  position:absolute;z-index:2;left:7%;right:7%;top:30px;height:295px;
+  background:linear-gradient(145deg,#fffafd,#fff3f8);border-radius:7px;color:#6e2c46;
+  transform:translateY(95px);opacity:.18;overflow:hidden;
+  transition:1s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 25px #0004;
 }
-.open .paper{transform:translateY(-18px);opacity:1}
+.paper:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 10%,#e58caf22,transparent 30%),radial-gradient(circle at 10% 90%,#b8326b18,transparent 32%);pointer-events:none}
+.paper-inner{position:relative;z-index:2;height:100%;overflow:hidden;padding:24px 25px;text-align:center}
+.paper-inner h3{font:italic 25px Georgia,serif;color:#8f315d;margin:0 0 10px}
+.paper-inner p{font:14px/1.45 Georgia,serif;margin:0 0 8px}
+.paper-verse{margin:11px 0 0;padding:9px 10px;border-top:1px solid #e7cbd6;border-bottom:1px solid #e7cbd6;font:italic 12px/1.4 Georgia,serif;color:#71304b}
+.paper-verse small{display:block;margin-top:4px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:1px;color:#9a6176}
+.paper-hint{margin-top:10px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:2px;text-transform:uppercase;color:#a15a75}
+.open .paper{transform:translateY(-32px);opacity:1}
 
 .letter{
   display:none;max-width:760px;width:100%;
@@ -184,7 +191,7 @@ body:before{
 @media(max-width:650px){
   .tulip{opacity:.5}.t7,.t8{display:none}
   .letter{padding:32px 22px}.letter p{font-size:16px}
-  .polaroid{width:135px}.envelope{height:260px}.flap{border-left-width:200px;border-right-width:200px;border-top-width:138px}
+  .polaroid{width:135px}.envelope{height:300px}.flap{border-left-width:200px;border-right-width:200px;border-top-width:150px}.paper{height:260px}.paper-inner{padding:20px 18px}.paper-inner h3{font-size:22px}.paper-inner p{font-size:12px}.paper-verse{font-size:11px}
 }
 <style>
 .page2{display:none;position:fixed;inset:0;z-index:20;padding:55px 22px 45px;box-sizing:border-box;overflow-y:auto;background:radial-gradient(circle at 50% 18%,#f5d5e1 0%,#9e496a 48%,#2b0b18 100%);color:#fff;opacity:0}
@@ -235,7 +242,15 @@ body:before{
 <div class="wrap">
   <div class="envelope" id="env" onclick="openLetter()">
     <div class="env"></div>
-    <div class="paper"></div>
+    <div class="paper">
+      <div class="paper-inner">
+        <h3>For Ayli ♡</h3>
+        <p>Before you read anything else, I wanted you to know who my heart keeps choosing.</p>
+        <div class="paper-verse">“Many waters cannot quench love, neither can the floods drown it.”<small>Song of Solomon 8:7</small></div>
+        <div class="paper-verse">“Set me as a seal upon thine heart...”<small>Song of Solomon 8:6</small></div>
+        <div class="paper-hint">Open the letter below to read the rest</div>
+      </div>
+    </div>
     <div class="flap"></div>
     <div class="seal">♡</div>
     <div class="hint">TAP TO OPEN</div>
