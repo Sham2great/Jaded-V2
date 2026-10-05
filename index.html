@@ -10,18 +10,23 @@ html{scroll-behavior:smooth}
 body{
   margin:0;min-height:100vh;overflow-x:hidden;
   background:
-    radial-gradient(circle at 50% 15%,#f7b6cf 0%,#ee8fb3 34%,#b94f7b 78%);
-  color:#f8edf2;font-family:Georgia,serif;
+    radial-gradient(circle at 50% 8%,#fff6fb 0%,#ffd9e9 24%,#f7a9c8 58%,#ee86b1 100%);
+  color:#7a3653;font-family:Georgia,serif;
 }
 body:before{
   content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;
   background-image:radial-gradient(#fff 1px,transparent 1px);
   background-size:42px 42px;animation:stars 14s linear infinite;
 }
-.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;z-index:2}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 24px;position:relative;z-index:5}
 .ambient{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.ambient:after{content:'♡  ✦  ♡  ✧  ♡  ✦  ♡';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff8;font-size:12vw;letter-spacing:5vw;transform:rotate(-12deg);animation:giantPulse 6s ease-in-out infinite;white-space:nowrap;}
+.sparkle{position:fixed;pointer-events:none;color:#fff;z-index:8;font-size:18px;text-shadow:0 0 12px #fff,0 0 25px #e85d95;animation:sparkleOut 1.2s ease-out forwards}
+.ribbon{position:fixed;top:0;left:50%;transform:translateX(-50%);width:110%;height:8px;background:linear-gradient(90deg,transparent,#fff,#f06fa4,#fff,transparent);box-shadow:0 0 25px #fff;z-index:9;animation:ribbonGlow 2s ease-in-out infinite}
+
 .glow{position:absolute;width:360px;height:360px;border-radius:50%;filter:blur(80px);background:#ffffff55;animation:glow 7s ease-in-out infinite}
 .g1{left:-130px;top:18%}.g2{right:-130px;bottom:8%;animation-delay:2s}
+.g3{width:260px;height:260px;left:42%;top:45%;background:#fff8d9;animation-delay:1s}
 
 .envelope{
   width:min(440px,92vw);height:285px;position:relative;cursor:pointer;
@@ -126,7 +131,11 @@ body:before{
   text-align:center;font-style:italic;color:#b8326b;min-height:52px;
   line-height:1.6;padding:18px 18px 5px;transition:.35s;
 }
-.end{text-align:center;margin-top:32px;color:#b8326b;font-size:15px;line-height:1.6}
+.end{text-align:center;margin-top:32px;color:#b8326b;font-size:15px;line-height:1.6;font-weight:700;text-shadow:0 0 18px #f6a2c6}
+.end:after{content:' ✦ ♡ ✦ ';display:block;font-size:25px;margin-top:12px;animation:twinkle 1.5s infinite}
+.polaroid{transform-style:preserve-3d}
+.polaroid .cover{transition:.4s}
+.polaroid:hover .cover{transform:scale(1.05) rotate(-1deg)}
 
 .tulip-field{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .tulip{
@@ -168,6 +177,10 @@ body:before{
 @keyframes glow{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:.9}}
 @keyframes sway{0%,100%{rotate:-2deg}50%{rotate:3deg}}
 @keyframes stars{to{background-position:0 42px}}
+@keyframes giantPulse{0%,100%{opacity:.18;transform:rotate(-12deg) scale(.9)}50%{opacity:.4;transform:rotate(-12deg) scale(1.08)}}
+@keyframes sparkleOut{0%{opacity:0;transform:scale(.2) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-45px) scale(1.8) rotate(180deg)}}
+@keyframes ribbonGlow{0%,100%{opacity:.65}50%{opacity:1;box-shadow:0 0 35px #fff}}
+@keyframes twinkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
 @media(max-width:650px){
   .tulip{opacity:.5}.t7,.t8{display:none}
   .letter{padding:32px 22px}.letter p{font-size:16px}
@@ -176,7 +189,7 @@ body:before{
 </style>
 </head>
 <body>
-<div class="ambient"><div class="glow g1"></div><div class="glow g2"></div></div>
+<div class="ambient"><div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div></div><div class="ribbon"></div>
 
 <div class="tulip-field">
   <div class="tulip t1"><i></i><b></b></div>
@@ -259,6 +272,9 @@ body:before{
 
 <script>
 let opened=false;
+const sparkleChars=['✦','✧','♡','⋆','✿'];
+function burst(x,y){for(let i=0;i<9;i++){const s=document.createElement('div');s.className='sparkle';s.textContent=sparkleChars[i%sparkleChars.length];s.style.left=(x+(Math.random()*100-50))+'px';s.style.top=(y+(Math.random()*70-35))+'px';s.style.animationDelay=(Math.random()*.15)+'s';document.body.appendChild(s);setTimeout(()=>s.remove(),1500)}}
+document.addEventListener('click',e=>burst(e.clientX,e.clientY));
 function openLetter(){
   if(opened)return;
   opened=true;
