@@ -64,7 +64,9 @@ body:before{
   font:700 12px system-ui;color:#ffeef5;letter-spacing:2px;
   animation:hintPulse 1.8s ease-in-out infinite;
 }
-.open .flap{transform:rotateX(180deg);z-index:1}
+.open .flap{transform:rotateX(180deg);z-index:1;transform-origin:top center}
+.open .paper{z-index:4;transform:translateY(-55px);opacity:1}
+.open .hint{opacity:0}
 .open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4)}
 .open{animation:none;transform:translateY(25px) scale(.96)}
 .paper{
@@ -80,7 +82,7 @@ body:before{
 .paper-verse{margin:11px 0 0;padding:9px 10px;border-top:1px solid #e7cbd6;border-bottom:1px solid #e7cbd6;font:italic 12px/1.4 Georgia,serif;color:#71304b}
 .paper-verse small{display:block;margin-top:4px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:1px;color:#9a6176}
 .paper-hint{margin-top:10px;font:600 9px 'Trebuchet MS',sans-serif;letter-spacing:2px;text-transform:uppercase;color:#a15a75}
-.open .paper{transform:translateY(-32px);opacity:1}
+
 
 .letter{
   display:none;max-width:760px;width:100%;
@@ -193,7 +195,7 @@ body:before{
   .letter{padding:32px 22px}.letter p{font-size:16px}
   .polaroid{width:135px}.envelope{height:300px}.flap{border-left-width:200px;border-right-width:200px;border-top-width:150px}.paper{height:260px}.paper-inner{padding:20px 18px}.paper-inner h3{font-size:22px}.paper-inner p{font-size:12px}.paper-verse{font-size:11px}
 }
-<style>
+
 .page2{display:none;position:fixed;inset:0;z-index:20;padding:55px 22px 45px;box-sizing:border-box;overflow-y:auto;background:radial-gradient(circle at 50% 18%,#f5d5e1 0%,#9e496a 48%,#2b0b18 100%);color:#fff;opacity:0}
 .page2.show{display:block;animation:pageReveal 1.35s cubic-bezier(.2,.8,.2,1) forwards}
 @keyframes pageReveal{0%{opacity:0;transform:scale(1.12);filter:blur(18px)}45%{opacity:1;filter:blur(2px)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
@@ -240,7 +242,7 @@ body:before{
 </div>
 
 <div class="wrap">
-  <div class="envelope" id="env" onclick="openLetter()">
+  <div class="envelope" id="env">
     <div class="env"></div>
     <div class="paper">
       <div class="paper-inner">
@@ -394,6 +396,8 @@ document.querySelectorAll('.polaroid').forEach(card=>{
 });
 </script>
 <script>
+const envelope=document.getElementById('env');
+envelope.addEventListener('click',openLetter);
 const skipPage=document.getElementById('skipPage');
 const page2=document.getElementById('page2');
 skipPage.addEventListener('click',()=>{
