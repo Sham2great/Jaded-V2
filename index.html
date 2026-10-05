@@ -109,13 +109,31 @@ body:before{
   100%{opacity:1;transform:translateY(0) scale(1);clip-path:inset(0 0 0 0 round 24px);filter:blur(0)}
 }
 
-.floating-lyrics{position:fixed;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;width:180px;text-align:center;font:italic 17px/1.5 Georgia,serif;color:#fff;letter-spacing:.3px;text-shadow:0 3px 18px #5b1738;opacity:0}
-.floating-lyrics.left{left:max(18px,calc(50% - 570px));right:auto}
-.floating-lyrics.right{left:calc(50% + 390px);right:auto}
+.floating-lyrics{
+  position:fixed;top:50%;transform:translateY(-50%);
+  z-index:6;pointer-events:none;width:150px;
+  text-align:center;font:italic 15px/1.5 Georgia,serif;
+  color:#fff;letter-spacing:.3px;text-shadow:0 3px 18px #5b1738;
+  opacity:0;
+}
+.floating-lyrics.left{left:20px;right:auto}
+.floating-lyrics.right{left:auto;right:20px}
 .floating-lyrics.show{animation:typewriterFade 4.2s ease-in-out forwards}
-@keyframes typewriterFade{0%{opacity:0}8%{opacity:1}12%{opacity:1}55%{opacity:1}100%{opacity:0}}
-@media(max-width:1100px){.floating-lyrics.left{left:12px}.floating-lyrics.right{left:auto;right:12px}}
-@media(max-width:650px){.floating-lyrics{width:95px;font-size:11px}.floating-lyrics.left{left:5px}.floating-lyrics.right{left:auto;right:5px}}
+@keyframes typewriterFade{
+  0%{opacity:0}
+  8%{opacity:1}
+  12%{opacity:1}
+  55%{opacity:1}
+  100%{opacity:0}
+}
+/* The letter is 760px wide, so the side phrases only appear when there is
+   enough actual side space. They can never sit on top of the paper. */
+@media(max-width:1100px){
+  .floating-lyrics{display:none}
+}
+@media(max-width:650px){
+  .floating-lyrics{display:none}
+}
 
 .letter h1{font-size:46px;margin:0 0 28px;color:#8f315d;text-align:center;font-family:Georgia,serif;font-style:italic}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
