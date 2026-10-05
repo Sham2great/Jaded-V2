@@ -109,9 +109,13 @@ body:before{
   100%{opacity:1;transform:translateY(0) scale(1);clip-path:inset(0 0 0 0 round 24px);filter:blur(0)}
 }
 
-.floating-lyrics{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;pointer-events:none;width:min(90vw,620px);text-align:center;font:italic 20px/1.5 Georgia,serif;color:#fff;letter-spacing:.3px;text-shadow:0 3px 18px #5b1738;opacity:0}
+.floating-lyrics{position:fixed;top:50%;transform:translateY(-50%);z-index:6;pointer-events:none;width:210px;text-align:center;font:italic 17px/1.5 Georgia,serif;color:#fff;letter-spacing:.3px;text-shadow:0 3px 18px #5b1738;opacity:0}
 .floating-lyrics.show{animation:typewriterFade 4.2s ease-in-out forwards}
+.floating-lyrics.left{right:calc(50% + 270px);left:auto}
+.floating-lyrics.right{left:calc(50% + 270px);right:auto}
 @keyframes typewriterFade{0%{opacity:0}8%{opacity:1}12%{opacity:1}55%{opacity:1}100%{opacity:0}}
+@media(max-width:900px){.floating-lyrics{width:145px;font-size:13px}.floating-lyrics.left{right:calc(50% + 205px)}.floating-lyrics.right{left:calc(50% + 205px)}}
+@media(max-width:650px){.floating-lyrics{width:105px;font-size:11px}.floating-lyrics.left{right:calc(50% + 160px)}.floating-lyrics.right{left:calc(50% + 160px)}}
 
 .letter h1{font-size:46px;margin:0 0 28px;color:#8f315d;text-align:center;font-family:Georgia,serif;font-style:italic}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
@@ -325,7 +329,7 @@ body:before{
     <div class="end">I don’t know if it can be you. I just know I want it to be.</div><button class="skip-page" id="skipPage">Skip to the next page ✦</button>
   </article>
   <div class="floating-lyrics" id="floatingLyrics" aria-hidden="true"></div>
-<section class="page2"/> id="page2">
+<section class="page2" id="page2">
   <div class="page2-inner">
     <div class="page2-kicker">What love asks us to remember</div>
     <h2>Some things are worth praying over.</h2>
@@ -350,7 +354,8 @@ function typeFloatingLyric(){
   const box=document.getElementById("floatingLyrics");
   if(!box)return;
   const line=lyricLines[lyricIndex%lyricLines.length]; lyricIndex++;
-  box.textContent=""; box.classList.remove("show");
+  box.className="floating-lyrics "+(lyricIndex%2?"left":"right");
+  box.textContent="";
   let i=0;
   const type=setInterval(()=>{box.textContent=line.slice(0,++i); if(i>=line.length){clearInterval(type); box.classList.add("show");}},55);
 }
