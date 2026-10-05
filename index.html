@@ -65,14 +65,14 @@ body:before{
   animation:hintPulse 1.8s ease-in-out infinite;
 }
 .open .flap{transform:rotateX(180deg);z-index:1;transform-origin:top center}
-.open .paper{z-index:4;transform:translateY(-55px);opacity:1}
+.open .paper{z-index:4;transform:translateY(-55px);opacity:1;transition-delay:.15s}
 .open .hint{opacity:0}
 .open .seal{opacity:0;transform:translate(-50%,-50%) scale(.4)}
 .open{animation:none;transform:translateY(25px) scale(.96)}
 .paper{
   position:absolute;z-index:2;left:7%;right:7%;top:30px;height:295px;
   background:linear-gradient(145deg,#fffafd,#fff3f8);border-radius:7px;color:#6e2c46;
-  transform:translateY(95px);opacity:.18;overflow:hidden;
+  transform:translateY(95px);opacity:0;overflow:hidden;
   transition:1s cubic-bezier(.2,.8,.2,1);box-shadow:0 8px 25px #0004;
 }
 .paper:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 90% 10%,#e58caf22,transparent 30%),radial-gradient(circle at 10% 90%,#b8326b18,transparent 32%);pointer-events:none}
@@ -91,6 +91,8 @@ body:before{
   box-shadow:0 30px 80px #000b,0 0 0 1px #fff8;
   animation:rise 1s cubic-bezier(.2,.8,.2,1);
   position:relative;overflow:hidden;
+  opacity:0;transform:translateY(28px) scale(.97);
+  transition:opacity 1.2s ease,transform 1.2s cubic-bezier(.2,.8,.2,1);
 }
 .letter:before{
   content:"";position:absolute;inset:-100px;
@@ -98,6 +100,7 @@ body:before{
   pointer-events:none;
 }
 .letter>*{position:relative;z-index:1}
+.letter.reveal-letter{opacity:1;transform:translateY(0) scale(1)}
 .letter h1{font-size:46px;margin:0 0 28px;color:#8f315d;text-align:center;font-family:Georgia,serif;font-style:italic}
 .letter p{font-size:17px;line-height:1.8;margin:0 0 18px}
 .music{text-align:center;margin:25px 0 5px}
@@ -365,8 +368,10 @@ function openLetter(){
   if(playAttempt){playAttempt.then(()=>{document.getElementById('musicBtn').textContent='Ⅱ Pause Jaded';document.getElementById('player').textContent='Now playing'}).catch(()=>{document.getElementById('player').textContent='Tap Play Jaded if your browser blocks autoplay.'});}
   setTimeout(()=>{
     e.style.display='none';
-    document.getElementById('letter').style.display='block';
-    document.getElementById('letter').scrollIntoView({behavior:'smooth',block:'center'});
+    const letter=document.getElementById('letter');
+    letter.style.display='block';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>letter.classList.add('reveal-letter')));
+    setTimeout(()=>letter.scrollIntoView({behavior:'smooth',block:'center'}),180);
   },15000);
 }
 heartRain(10);setInterval(()=>heartRain(2),7000);
