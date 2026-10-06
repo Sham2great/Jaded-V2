@@ -121,6 +121,8 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 #keyReveal.hide{opacity:0;visibility:hidden}
 #music{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin:0;background:#170914;color:#e7b7c7;border:1px solid #d49aae66;font-size:18px;box-shadow:0 0 25px #b9366a44;opacity:0;transition:.5s}
 #music.show{opacity:1}
+#skipTyping{display:none;position:fixed;right:22px;bottom:76px;z-index:90;margin:0;padding:9px 15px;background:#170914;color:#e7b7c7;border:1px solid #d49aae66;border-radius:30px;font:600 9px system-ui;letter-spacing:2px;box-shadow:0 0 25px #b9366a44;opacity:.9}
+#skipTyping:hover{transform:translateY(-2px);box-shadow:0 0 30px #d76d9766}
 
 /* DEMO MODE: blur every visible instance of the name */
 .demo-blur-name{filter:blur(7px);user-select:none}
@@ -147,6 +149,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 <section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><button type="button" class="key" id="unlockKey" aria-label="Unlock and continue">🗝</button><div class="key-text">some things have to be unlocked first</div></div></section>
 <audio id="pipeDown" src="Drake%20-%20Pipe%20Down%20(Audio).mp3" preload="auto"></audio>
 <button id="music" aria-label="Toggle music">♫</button>
+<button id="skipTyping" aria-label="Skip letter typing">SKIP TYPING</button>
 <section id="bookIntro">
 <div class="book-stage" id="bookStage">
 <div class="book">
@@ -310,6 +313,7 @@ const bookStage=document.getElementById("bookStage");
 const pages=[...document.querySelectorAll(".book-page")];
 const letter=document.getElementById("letter");
 const again=document.getElementById("again");
+const skipTyping=document.getElementById("skipTyping");
 let i=0,timer,autoScroll;
 
 function startAutoScroll(){
@@ -319,12 +323,21 @@ function startAutoScroll(){
    if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+1.4));
  },30);
 }
+function finishLetter(){
+ clearInterval(timer);clearInterval(autoScroll);
+ letter.textContent=text;
+ window.scrollTo(0,document.documentElement.scrollHeight);
+ again.style.display="block";
+ if(DEMO_MODE)skipTyping.style.display="none";
+}
 function write(){
  clearInterval(timer);clearInterval(autoScroll);
- letter.textContent="";again.style.display="none";window.scrollTo(0,0);i=0;startAutoScroll();
+ letter.textContent="";again.style.display="none";
+ if(DEMO_MODE)skipTyping.style.display="block";
+ window.scrollTo(0,0);i=0;startAutoScroll();
  timer=setInterval(()=>{
    letter.textContent=text.slice(0,i++);
-   if(i>text.length){clearInterval(timer);setTimeout(()=>{clearInterval(autoScroll);again.style.display="block";},1800);}
+   if(i>text.length){clearInterval(timer);setTimeout(()=>{clearInterval(autoScroll);again.style.display="block";if(DEMO_MODE)skipTyping.style.display="none";},1800);}
  },32);
 }
 function openBook(){
@@ -383,6 +396,7 @@ demoObserver.observe(document.body,{childList:true,subtree:true});
 
 // The experience begins only after the puzzle and key reveal.
 again.onclick=write;
+skipTyping.onclick=finishLetter;
 </script>
 </body>
 </html>
