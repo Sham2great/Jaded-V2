@@ -102,6 +102,12 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 #startScreen.hide{opacity:0;visibility:hidden}
 @keyframes startPulse{50%{transform:scale(1.08);opacity:.6}}
 @keyframes startButtonGlow{50%{box-shadow:0 0 50px #d85d8988,0 0 100px #d85d8933}}
+
+.mini-puzzle{display:flex;justify-content:center;gap:12px;margin:30px auto 28px}
+.piece{width:74px;height:74px;margin:0;border:1px solid #d49aae66;border-radius:14px;background:linear-gradient(145deg,#4a1830,#170914);color:#e7b7c7;font:italic 28px Georgia;cursor:pointer;box-shadow:inset 0 0 25px #d45d8820,0 10px 30px #000;transition:.3s}
+.piece:hover{transform:translateY(-5px) rotate(-2deg);box-shadow:0 0 28px #d76d9766}
+.piece.chosen{opacity:.35;transform:scale(.9)}
+#startButton.ready{opacity:1;pointer-events:auto}
 </style>
 </head>
 <body>
@@ -109,21 +115,15 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 <section id="startScreen">
   <div class="start-wrap">
     <div class="start-kicker">BEFORE THE LETTER</div>
-    <h2 class="start-title">Piece It Together.</h2>
-    <div class="start-sub">Some thoughts only make sense when they find their place.</div>
-    <div class="puzzle" id="puzzle">
-      <button class="tile" data-v="W">W</button>
-      <button class="tile" data-v="H">H</button>
-      <button class="tile" data-v="A">A</button>
-      <button class="tile" data-v="T">T</button>
-      <button class="tile" data-v="I">I</button>
-      <button class="tile" data-v="F">F</button>
-      <button class="tile" data-v="?">?</button>
-      <button class="tile" data-v="♡">♡</button>
-      <button class="tile empty" data-v=""></button>
+    <h2 class="start-title">There's something I never said.</h2>
+    <div class="start-sub">Put the three pieces together.</div>
+    <div class="mini-puzzle" id="miniPuzzle">
+      <button class="piece" data-pos="1">♡</button>
+      <button class="piece" data-pos="2">?</button>
+      <button class="piece" data-pos="3">W</button>
     </div>
     <button id="startButton">START THE LETTER</button>
-    <div class="start-status" id="startStatus">solve the little thought first</div>
+    <div class="start-status" id="startStatus">tap the pieces in the right order</div>
   </div>
 </section>
 
@@ -163,52 +163,33 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 <script>
 
 const startScreen=document.getElementById("startScreen");
-const puzzle=document.getElementById("puzzle");
+const puzzle=document.getElementById("miniPuzzle");
 const startButton=document.getElementById("startButton");
 const startStatus=document.getElementById("startStatus");
-let tiles=[...puzzle.querySelectorAll(".tile")];
-let empty=8;
-const solution=["W","H","A","T","I","F","?","♡",""];
-function renderPuzzle(){
-  tiles.forEach((t,i)=>{puzzle.appendChild(t);t.classList.remove("selected")});
-  tiles.forEach((t,i)=>t.textContent=t.dataset.v);
-}
-function isAdjacent(a,b){
-  const ar=Math.floor(a/3),ac=a%3,br=Math.floor(b/3),bc=b%3;
-  return Math.abs(ar-br)+Math.abs(ac-bc)===1;
-}
-function checkSolved(){
-  const vals=tiles.map(t=>t.dataset.v);
-  if(vals.every((v,i)=>v===solution[i])){
-    startButton.classList.add("ready");
-    startStatus.textContent="the pieces fit. now begin.";
-    startStatus.style.color="#e3a7bc";
-    tiles.forEach(t=>t.style.pointerEvents="none");
-  }
-}
-function shufflePuzzle(){
-  for(let n=0;n<35;n++){
-    const possible=[];
-    tiles.forEach((t,i)=>{if(i!==empty&&isAdjacent(i,empty))possible.push(i)});
-    const pick=possible[Math.floor(Math.random()*possible.length)];
-    [tiles[pick],tiles[empty]]=[tiles[empty],tiles[pick]];
-    empty=pick;
-  }
-  renderPuzzle();
-}
-puzzle.addEventListener("click",e=>{
-  const tile=e.target.closest(".tile");
-  if(!tile||tile.classList.contains("empty"))return;
-  const from=tiles.indexOf(tile);
-  if(!isAdjacent(from,empty))return;
-  [tiles[from],tiles[empty]]=[tiles[empty],tiles[from]];
-  empty=from;
-  renderPuzzle();
-  tile.classList.add("selected");
-  checkSolved();
+const pieces=[...puzzle.querySelectorAll(".piece")];
+const answer=["W","?","♡"];
+let next=0;
+pieces.forEach(piece=>{
+  piece.addEventListener("click",()=>{
+    if(piece.classList.contains("chosen")) return;
+    if(piece.dataset.pos===String(next+1)){
+      piece.classList.add("chosen");
+      next++;
+      if(next===3){
+        startButton.classList.add("ready");
+        startStatus.textContent="you found it.";
+        startStatus.style.color="#e3a7bc";
+      } else {
+        startStatus.textContent=next===1?"one down.":"almost.";
+      }
+    } else {
+      startStatus.textContent="not that one.";
+      piece.animate([{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:220});
+    }
+  });
 });
-shufflePuzzle();
 startButton.onclick=()=>{
+  if(next<3)return;
   startScreen.classList.add("hide");
   setTimeout(()=>startScreen.remove(),1200);
 };
