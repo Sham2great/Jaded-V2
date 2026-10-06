@@ -109,8 +109,8 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 .piece.chosen{opacity:.35;transform:scale(.9)}
 #startButton.ready{opacity:1;pointer-events:auto}
 
-#keyReveal{position:fixed;inset:0;z-index:90;background:radial-gradient(circle,#3b1024,#08050a 65%,#020204);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 1s,visibility 1s}
-#keyReveal.show{opacity:1;visibility:visible}
+#keyReveal{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle,#3b1024,#08050a 65%,#020204);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 1s,visibility 1s}
+#keyReveal.show{opacity:1;visibility:visible;pointer-events:auto}
 .key-scene{text-align:center;position:relative}
 .key-ring{width:190px;height:190px;border:1px solid #d98ca944;border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 70px #b9366a33;animation:keyPulse 3s ease-in-out infinite}
 .key{font-size:82px;display:block;color:#e9b3c7;text-shadow:0 0 25px #d24e80,0 0 70px #a72f5e;animation:keyFloat 3s ease-in-out infinite;border:0;background:transparent;padding:10px;cursor:pointer;transition:.35s;position:relative;z-index:2}.key:hover{transform:scale(1.12) rotate(-5deg);filter:brightness(1.25);text-shadow:0 0 35px #ff82ad,0 0 90px #d43d75}.key:active{transform:scale(.94) rotate(3deg)}
@@ -141,7 +141,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 </section>
 
 
-<section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><button class="key" id="unlockKey" aria-label="Unlock and continue">🗝</button><div class="key-text">some things have to be unlocked first</div></div></section>
+<section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><button type="button" class="key" id="unlockKey" aria-label="Unlock and continue">🗝</button><div class="key-text">some things have to be unlocked first</div></div></section>
 <audio id="pipeDown" src="Drake%20-%20Pipe%20Down%20(Audio).mp3" preload="auto"></audio>
 <button id="music" aria-label="Toggle music">♫</button>
 <section id="bookIntro">
@@ -250,7 +250,7 @@ startButton.onclick=()=>{
   },1200);
 };
 const unlockKey=document.getElementById("unlockKey");
-unlockKey.onclick=()=>{
+function unlockAndContinue(){
   if(keyUnlocked)return;
   keyUnlocked=true;
   unlockKey.style.transform="rotate(360deg) scale(1.18)";
@@ -261,7 +261,8 @@ unlockKey.onclick=()=>{
     keyReveal.classList.add("hide");
     setTimeout(()=>{keyReveal.remove();openBook();},1000);
   },900);
-};
+}
+unlockKey.addEventListener("click",unlockAndContinue);
 
 const text = `Ayli,
 
