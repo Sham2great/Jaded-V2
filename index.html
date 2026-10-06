@@ -268,24 +268,35 @@ const text = `Ayli,
 
 I don't really know when you became someone I thought about this much.
 
-Maybe it was the conversations. Maybe it was how easily we understood each other. Maybe it was just meeting someone who made me look at love a little differently.
+Maybe it was the conversations. Maybe it was how easily we understood each other. Maybe it was simply meeting someone who made me look at love a little differently.
 
-I know I can't predict where any of this goes.
+I know you sometimes see yourself as a horrible person. I know there are parts of yourself you've learned to keep behind a wall, and maybe being alone feels safer than letting someone close enough to hurt you.
 
-And I'm not trying to.
+But I don't think the person you see when you look at yourself is the whole story.
 
-I just think there is something beautiful about the possibility of trying something different. Meeting someone outside the usual expectations. Letting two people who understand each other see what could happen if they ever got the chance.
+I see someone who has been guarded for a reason. Someone who learned to protect herself before anyone could get the chance to disappoint her. And I don't think being guarded makes you incapable of being loved. I think it means you deserve to experience something that doesn't ask you to keep your guard up forever.
+
+I'm not trying to convince you that you have to let me in.
+
+I just wish, if you ever decided to, you'd let me show you that being cared for doesn't have to come with pain. That someone can be patient with you. That you don't have to be perfect to be understood. That you don't have to disappear into being alone whenever things start feeling too real.
+
+I can't promise that trying something different would be perfect.
 
 Maybe we'd surprise each other.
-Maybe we'd learn something.
+Maybe we'd learn things we didn't expect.
 Maybe it wouldn't work at all.
 
-But if there ever came a moment when trying was actually possible, I'd want to know what it felt like.
+But I think there is something beautiful about giving a possibility a chance instead of letting fear decide its ending.
 
-Not because I expect anything from you.
-Not because I think something is owed to me.
+And if there ever came a moment when trying was actually possible, I'd want to be there.
 
-Just because you are one of the few people who made me wonder.
+Not to fix you.
+Not to change you.
+Not because I think you owe me anything.
+
+Just to let you see what it feels like when someone chooses to stay gentle with you.
+
+You made me wonder about a kind of love that doesn't have to hurt to be real.
 
 And honestly...
 
@@ -301,8 +312,8 @@ let i=0,timer,autoScroll;
 function startAutoScroll(){
  clearInterval(autoScroll);
  autoScroll=setInterval(()=>{
-   const max=document.documentElement.scrollHeight-window.innerHeight;
-   if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+.5));
+   const max=Math.max(0,document.documentElement.scrollHeight-window.innerHeight);
+   if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+1.4));
  },30);
 }
 function write(){
