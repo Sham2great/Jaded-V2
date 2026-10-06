@@ -82,9 +82,51 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 .t1,.t2,.t3,.t4,.t5{filter:blur(.1px);letter-spacing:.4px}
 @media(max-width:900px){.thought{display:block;font-size:11px}.t1{left:3%;top:18%}.t2{right:3%;top:29%}.t3{left:3%;bottom:27%}.t4{right:3%;bottom:16%}.t5{top:9%}}
 @media(max-width:600px){.book-stage{width:88vw;height:58vh}.book-page{padding:35px 28px}.thought-text{font-size:26px}.page{padding-top:5vh}.card{width:94vw;padding:40px 28px}h1{font-size:34px}#letter{font-size:15px;line-height:1.85}}
+
+#startScreen{position:fixed;inset:0;z-index:100;background:#030207;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1.2s,visibility 1.2s}
+#startScreen:before{content:"";position:absolute;width:65vmin;height:65vmin;border-radius:50%;border:1px solid #d786a733;box-shadow:0 0 90px #a52f5a33,inset 0 0 80px #a52f5a22;animation:startPulse 4s ease-in-out infinite}
+#startScreen:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#fff4 1px,transparent 1px);background-size:44px 44px;opacity:.35}
+.start-wrap{position:relative;z-index:2;text-align:center;width:min(430px,90vw)}
+.start-kicker{font:600 9px system-ui;letter-spacing:6px;color:#a77a8b;margin-bottom:22px;opacity:.8}
+.start-title{font:italic 45px Georgia;color:#f6dce6;text-shadow:0 0 30px #b23c68;margin:0 0 10px}
+.start-sub{font:italic 14px Georgia;color:#aa8d99;margin-bottom:32px}
+.puzzle{width:216px;height:216px;margin:0 auto 26px;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;transform:rotate(-2deg);filter:drop-shadow(0 15px 35px #000)}
+.tile{border:1px solid #d49aae66;background:linear-gradient(145deg,#4a1830,#170914);color:#e7b7c7;display:grid;place-items:center;font:italic 25px Georgia;cursor:pointer;transition:.35s;box-shadow:inset 0 0 25px #d45d8820}
+.tile:hover{transform:scale(.94);box-shadow:0 0 25px #d76d9766}
+.tile.selected{transform:scale(.9);border-color:#f0b1c9;box-shadow:0 0 30px #d76d97aa}
+.tile.empty{background:#09060b;border-style:dashed;cursor:default;box-shadow:inset 0 0 25px #000}
+#startButton{opacity:.25;pointer-events:none;margin:0 auto;border:1px solid #d28ba4;background:transparent;color:#edc4d2;padding:13px 28px;border-radius:40px;font:600 10px system-ui;letter-spacing:4px;box-shadow:0 0 0 #d85d89;transition:.5s}
+#startButton.ready{opacity:1;pointer-events:auto;box-shadow:0 0 35px #d85d8966,0 0 80px #d85d8922;animation:startButtonGlow 2s ease-in-out infinite}
+#startButton.ready:hover{transform:translateY(-3px) scale(1.04);background:#d85d8918}
+.start-status{height:20px;margin-top:16px;font:italic 11px Georgia;color:#9e7f8c}
+#startScreen.hide{opacity:0;visibility:hidden}
+@keyframes startPulse{50%{transform:scale(1.08);opacity:.6}}
+@keyframes startButtonGlow{50%{box-shadow:0 0 50px #d85d8988,0 0 100px #d85d8933}}
 </style>
 </head>
 <body>
+
+<section id="startScreen">
+  <div class="start-wrap">
+    <div class="start-kicker">BEFORE THE LETTER</div>
+    <h2 class="start-title">Piece It Together.</h2>
+    <div class="start-sub">Some thoughts only make sense when they find their place.</div>
+    <div class="puzzle" id="puzzle">
+      <button class="tile" data-v="W">W</button>
+      <button class="tile" data-v="H">H</button>
+      <button class="tile" data-v="A">A</button>
+      <button class="tile" data-v="T">T</button>
+      <button class="tile" data-v="I">I</button>
+      <button class="tile" data-v="F">F</button>
+      <button class="tile" data-v="?">?</button>
+      <button class="tile" data-v="♡">♡</button>
+      <button class="tile empty" data-v=""></button>
+    </div>
+    <button id="startButton">START THE LETTER</button>
+    <div class="start-status" id="startStatus">solve the little thought first</div>
+  </div>
+</section>
+
 
 <section id="bookIntro">
 <div class="book-stage" id="bookStage">
@@ -119,6 +161,58 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 </div>
 
 <script>
+
+const startScreen=document.getElementById("startScreen");
+const puzzle=document.getElementById("puzzle");
+const startButton=document.getElementById("startButton");
+const startStatus=document.getElementById("startStatus");
+let tiles=[...puzzle.querySelectorAll(".tile")];
+let empty=8;
+const solution=["W","H","A","T","I","F","?","♡",""];
+function renderPuzzle(){
+  tiles.forEach((t,i)=>{puzzle.appendChild(t);t.classList.remove("selected")});
+  tiles.forEach((t,i)=>t.textContent=t.dataset.v);
+}
+function isAdjacent(a,b){
+  const ar=Math.floor(a/3),ac=a%3,br=Math.floor(b/3),bc=b%3;
+  return Math.abs(ar-br)+Math.abs(ac-bc)===1;
+}
+function checkSolved(){
+  const vals=tiles.map(t=>t.dataset.v);
+  if(vals.every((v,i)=>v===solution[i])){
+    startButton.classList.add("ready");
+    startStatus.textContent="the pieces fit. now begin.";
+    startStatus.style.color="#e3a7bc";
+    tiles.forEach(t=>t.style.pointerEvents="none");
+  }
+}
+function shufflePuzzle(){
+  for(let n=0;n<35;n++){
+    const possible=[];
+    tiles.forEach((t,i)=>{if(i!==empty&&isAdjacent(i,empty))possible.push(i)});
+    const pick=possible[Math.floor(Math.random()*possible.length)];
+    [tiles[pick],tiles[empty]]=[tiles[empty],tiles[pick]];
+    empty=pick;
+  }
+  renderPuzzle();
+}
+puzzle.addEventListener("click",e=>{
+  const tile=e.target.closest(".tile");
+  if(!tile||tile.classList.contains("empty"))return;
+  const from=tiles.indexOf(tile);
+  if(!isAdjacent(from,empty))return;
+  [tiles[from],tiles[empty]]=[tiles[empty],tiles[from]];
+  empty=from;
+  renderPuzzle();
+  tile.classList.add("selected");
+  checkSolved();
+});
+shufflePuzzle();
+startButton.onclick=()=>{
+  startScreen.classList.add("hide");
+  setTimeout(()=>startScreen.remove(),1200);
+};
+
 const text = `Ayli,
 
 I don't really know when you became someone I thought about this much.
