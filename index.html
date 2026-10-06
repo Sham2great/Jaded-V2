@@ -328,12 +328,12 @@ function finishLetter(){
  letter.textContent=text;
  window.scrollTo(0,document.documentElement.scrollHeight);
  again.style.display="block";
- if(DEMO_MODE)skipTyping.style.display="none";
+ if(DEMO_MODE){skipTyping.style.display="none";skipTyping.style.visibility="hidden";}
 }
 function write(){
  clearInterval(timer);clearInterval(autoScroll);
  letter.textContent="";again.style.display="none";
- if(DEMO_MODE)skipTyping.style.display="block";
+ if(DEMO_MODE){skipTyping.style.display="block";skipTyping.style.visibility="visible";skipTyping.style.opacity="1";}
  window.scrollTo(0,0);i=0;startAutoScroll();
  timer=setInterval(()=>{
    letter.textContent=text.slice(0,i++);
@@ -341,6 +341,7 @@ function write(){
  },32);
 }
 function openBook(){
+  if(DEMO_MODE){skipTyping.style.display="none";skipTyping.style.visibility="hidden";}
   window.scrollTo(0,0);
   pages.forEach(p=>p.classList.remove("flip"));
   bookStage.classList.remove("exit");
@@ -397,6 +398,7 @@ demoObserver.observe(document.body,{childList:true,subtree:true});
 // The experience begins only after the puzzle and key reveal.
 again.onclick=write;
 skipTyping.onclick=finishLetter;
+if(DEMO_MODE){skipTyping.style.display="none";skipTyping.style.visibility="hidden";}
 </script>
 </body>
 </html>
