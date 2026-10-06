@@ -321,7 +321,7 @@ function write(){
  letter.textContent="";again.style.display="none";window.scrollTo(0,0);i=0;startAutoScroll();
  timer=setInterval(()=>{
    letter.textContent=text.slice(0,i++);
-   if(i>text.length){clearInterval(timer);clearInterval(autoScroll);again.style.display="block";}
+   if(i>text.length){clearInterval(timer);setTimeout(()=>{clearInterval(autoScroll);again.style.display="block";},1800);}
  },32);
 }
 function openBook(){
