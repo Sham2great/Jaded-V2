@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Two Timelines</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#070609;color:#fff;font-family:system-ui,Arial,sans-serif}
+body{overflow:hidden}.scene{height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative}
+.side{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:7vw;transition:all 1s cubic-bezier(.2,.8,.2,1);cursor:pointer}
+.left{background:radial-gradient(circle at 70% 45%,#542b45,#160d17 48%,#070609);border-right:1px solid #ffffff18}
+.right{background:radial-gradient(circle at 30% 45%,#8d315e,#28101e 48%,#070609)}
+.side:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent 35%,#fff1 50%,transparent 65%);transform:translateX(-120%);transition:1.5s}
+.side:hover:after{transform:translateX(120%)}
+.content{position:relative;z-index:2;max-width:430px}.tag{font:600 10px system-ui;letter-spacing:4px;text-transform:uppercase;opacity:.55}
+h1{font:italic 52px Georgia,serif;font-weight:400;line-height:1;margin:15px 0 18px}.desc{font:16px/1.8;color:#d8cbd3}.choice{margin-top:28px;padding:12px 20px;border:1px solid #fff4;border-radius:999px;background:#fff0;color:#fff;font:600 10px system-ui;letter-spacing:2px;cursor:pointer}
+.center{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);width:86px;height:86px;border:1px solid #fff5;border-radius:50%;background:#0b080d;display:grid;place-items:center;box-shadow:0 0 60px #000;font:italic 27px Georgia;color:#f4c5d9}
+.label{position:absolute;top:26px;left:50%;transform:translateX(-50%);z-index:5;font:600 10px system-ui;letter-spacing:5px;color:#bfaab6}
+.timeline{position:absolute;left:7vw;right:7vw;bottom:45px;height:1px;background:#fff2;z-index:3}.timeline:before{content:"";position:absolute;left:0;top:-3px;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 15px #fff}
+.modal{position:fixed;inset:0;background:#050307ee;backdrop-filter:blur(14px);z-index:20;display:flex;align-items:center;justify-content:center;padding:25px;opacity:0;pointer-events:none;transition:.7s}.modal.show{opacity:1;pointer-events:auto}
+.card{width:min(620px,92vw);padding:45px 38px;border:1px solid #fff2;border-radius:25px;background:linear-gradient(145deg,#21111c,#0e0a10);box-shadow:0 30px 100px #000;color:#fff;text-align:center;transform:translateY(25px) scale(.95);transition:.7s}.modal.show .card{transform:none}
+.card .tiny{font:600 10px system-ui;letter-spacing:4px;color:#c98aa7;text-transform:uppercase}.card h2{font:italic 38px Georgia;font-weight:400;margin:14px 0}.card p{font:16px/1.8;color:#d8ccd4}.close{margin-top:20px;background:transparent;border:1px solid #fff3;border-radius:999px;color:#fff;padding:11px 20px;font:600 10px system-ui;letter-spacing:2px;cursor:pointer}
+.final{position:fixed;inset:0;z-index:30;background:#050307;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px;opacity:0;pointer-events:none;transition:1.3s}.final.show{opacity:1;pointer-events:auto}.final div{max-width:700px}.final h2{font:italic 55px Georgia;font-weight:400;margin:15px 0}.final p{font:16px/1.8;color:#cfc2cb}.restart{margin-top:25px;padding:12px 22px;border:1px solid #fff3;border-radius:999px;background:#fff0;color:#fff;cursor:pointer}
+@media(max-width:700px){.scene{grid-template-columns:1fr;grid-template-rows:1fr 1fr}.left{border-right:0;border-bottom:1px solid #fff2}.center{width:62px;height:62px;font-size:21px}.label{top:14px}h1{font-size:37px}.side{padding:35px}.desc{font-size:14px}.timeline{display:none}}
+</style>
+</head>
+<body>
+<div class="scene">
+<div class="label">TWO TIMELINES</div>
+<section class="side left" data-side="never"><div class="content"><div class="tag">Timeline 01</div><h1>The life where we never try.</h1><div class="desc">Nothing changes. Everything stays familiar. There is no risk, no awkward beginning, no question of what could have been.</div><button class="choice">ENTER TIMELINE</button></div></section>
+<section class="side right" data-side="try"><div class="content"><div class="tag">Timeline 02</div><h1>The life where we do.</h1><div class="desc">Not a promise. Not a perfect ending. Just two people deciding that wondering forever might be worse than finding out.</div><button class="choice">ENTER TIMELINE</button></div></section>
+<div class="center">♡</div><div class="timeline"></div>
+</div>
+<div class="modal" id="modal"><div class="card"><div class="tiny" id="tiny"></div><h2 id="title"></h2><p id="text"></p><button class="close">CLOSE</button></div></div>
+<div class="final" id="final"><div><div class="tag">THE THIRD POSSIBILITY</div><h2>Maybe the point isn't knowing.</h2><p>Maybe it's having the courage to find out. I don't know which timeline we'd end up in. I just know I wouldn't want fear to decide for us.</p><button class="restart">BACK TO THE TIMELINES</button></div></div>
+<script>
+const data={
+never:{tiny:"Timeline 01 · Never",title:"Nothing happens.",text:"We keep being two people who met, understood each other, and eventually became a story about what might have happened. Maybe life moves on. Maybe the question fades. But somewhere in the timeline, there is still a version of us that never found out."},
+try:{tiny:"Timeline 02 · Try",title:"Something happens.",text:"Maybe we talk more. Maybe we discover that the connection was real. Maybe we realize we're better as two people who simply understand each other. Maybe it becomes something beautiful. The point is, we'd finally know."}
+};
+const modal=document.getElementById('modal'),tiny=document.getElementById('tiny'),title=document.getElementById('title'),text=document.getElementById('text');
+document.querySelectorAll('.side').forEach(side=>side.addEventListener('click',()=>{let d=data[side.dataset.side];tiny.textContent=d.tiny;title.textContent=d.title;text.textContent=d.text;modal.classList.add('show')}));
+document.querySelector('.close').onclick=()=>modal.classList.remove('show');
+modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('show')});
+let seen=new Set();
+document.querySelectorAll('.side').forEach(s=>s.addEventListener('click',()=>{seen.add(s.dataset.side);if(seen.size===2)setTimeout(()=>document.getElementById('final').classList.add('show'),700)}));
+document.querySelector('.restart').onclick=()=>document.getElementById('final').classList.remove('show');
+</script>
+</body></html>
