@@ -113,8 +113,8 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 #keyReveal.show{opacity:1;visibility:visible}
 .key-scene{text-align:center;position:relative}
 .key-ring{width:190px;height:190px;border:1px solid #d98ca944;border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 70px #b9366a33;animation:keyPulse 3s ease-in-out infinite}
-.key{font-size:82px;display:block;color:#e9b3c7;text-shadow:0 0 25px #d24e80,0 0 70px #a72f5e;animation:keyFloat 3s ease-in-out infinite}
-.key-text{margin-top:22px;color:#cba6b3;font:italic 14px Georgia;letter-spacing:1px;opacity:0;animation:fadeUp 1s 1s forwards}
+.key{font-size:82px;display:block;color:#e9b3c7;text-shadow:0 0 25px #d24e80,0 0 70px #a72f5e;animation:keyFloat 3s ease-in-out infinite;border:0;background:transparent;padding:10px;cursor:pointer;transition:.35s;position:relative;z-index:2}.key:hover{transform:scale(1.12) rotate(-5deg);filter:brightness(1.25);text-shadow:0 0 35px #ff82ad,0 0 90px #d43d75}.key:active{transform:scale(.94) rotate(3deg)}
+.key-text{margin-top:22px;color:#cba6b3;font:italic 14px Georgia;letter-spacing:1px;opacity:0;animation:fadeUp 1s 1s forwards}.key-text:after{content:"  •  click the key";color:#e0a6b8;letter-spacing:2px}
 @keyframes keyPulse{50%{transform:translate(-50%,-50%) scale(1.2);opacity:.5}}
 @keyframes keyFloat{50%{transform:translateY(-8px) rotate(-6deg)}}
 @keyframes fadeUp{to{opacity:.9}}
@@ -141,7 +141,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 </section>
 
 
-<section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><span class="key">🗝</span><div class="key-text">some things have to be unlocked first</div></div></section>
+<section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><button class="key" id="unlockKey" aria-label="Unlock and continue">🗝</button><div class="key-text">some things have to be unlocked first</div></div></section>
 <audio id="pipeDown" src="Drake%20-%20Pipe%20Down%20(Audio).mp3" preload="auto"></audio>
 <button id="music" aria-label="Toggle music">♫</button>
 <section id="bookIntro">
@@ -208,29 +208,59 @@ const keyReveal=document.getElementById("keyReveal");
 const music=document.getElementById("music");
 const pipeDown=document.getElementById("pipeDown");
 let fadeTimer;
-function fadeMusic(){
-  pipeDown.volume=0;
-  pipeDown.currentTime=0;
+let keyUnlocked=false;
+function fadeMusic(reset=false){
+  if(reset){
+    pipeDown.pause();
+    pipeDown.currentTime=0;
+    pipeDown.volume=0;
+  }
   pipeDown.play().then(()=>{
     clearInterval(fadeTimer);
-    let v=0;
-    fadeTimer=setInterval(()=>{v=Math.min(0.32,v+0.012);pipeDown.volume=v;if(v>=0.32)clearInterval(fadeTimer)},180);
+    let v=pipeDown.volume;
+    if(v>=0.32){
+      music.classList.add("show");
+      music.textContent="♫";
+      return;
+    }
+    fadeTimer=setInterval(()=>{
+      v=Math.min(0.32,v+0.012);
+      pipeDown.volume=v;
+      if(v>=0.32)clearInterval(fadeTimer);
+    },180);
     music.classList.add("show");
+    music.textContent="♫";
   }).catch(()=>{});
 }
-music.onclick=()=>{if(pipeDown.paused){fadeMusic()}else{pipeDown.pause();music.textContent="♫"}};
+music.onclick=()=>{
+  if(pipeDown.paused){
+    fadeMusic(false);
+  }else{
+    clearInterval(fadeTimer);
+    pipeDown.pause();
+    music.textContent="▶";
+  }
+};
 startButton.onclick=()=>{
   if(next<3)return;
   startScreen.classList.add("hide");
   setTimeout(()=>{
     startScreen.remove();
     keyReveal.classList.add("show");
-    fadeMusic();
-    setTimeout(()=>{
-      keyReveal.classList.add("hide");
-      setTimeout(()=>{keyReveal.remove();openBook();},1000);
-    },2600);
   },1200);
+};
+const unlockKey=document.getElementById("unlockKey");
+unlockKey.onclick=()=>{
+  if(keyUnlocked)return;
+  keyUnlocked=true;
+  unlockKey.style.transform="rotate(360deg) scale(1.18)";
+  unlockKey.style.filter="brightness(1.5)";
+  startStatus.textContent="";
+  fadeMusic(true);
+  setTimeout(()=>{
+    keyReveal.classList.add("hide");
+    setTimeout(()=>{keyReveal.remove();openBook();},1000);
+  },900);
 };
 
 const text = `Ayli,
