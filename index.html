@@ -108,6 +108,19 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 .piece:hover{transform:translateY(-5px) rotate(-2deg);box-shadow:0 0 28px #d76d9766}
 .piece.chosen{opacity:.35;transform:scale(.9)}
 #startButton.ready{opacity:1;pointer-events:auto}
+
+#keyReveal{position:fixed;inset:0;z-index:90;background:radial-gradient(circle,#3b1024,#08050a 65%,#020204);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 1s,visibility 1s}
+#keyReveal.show{opacity:1;visibility:visible}
+.key-scene{text-align:center;position:relative}
+.key-ring{width:190px;height:190px;border:1px solid #d98ca944;border-radius:50%;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 70px #b9366a33;animation:keyPulse 3s ease-in-out infinite}
+.key{font-size:82px;display:block;color:#e9b3c7;text-shadow:0 0 25px #d24e80,0 0 70px #a72f5e;animation:keyFloat 3s ease-in-out infinite}
+.key-text{margin-top:22px;color:#cba6b3;font:italic 14px Georgia;letter-spacing:1px;opacity:0;animation:fadeUp 1s 1s forwards}
+@keyframes keyPulse{50%{transform:translate(-50%,-50%) scale(1.2);opacity:.5}}
+@keyframes keyFloat{50%{transform:translateY(-8px) rotate(-6deg)}}
+@keyframes fadeUp{to{opacity:.9}}
+#keyReveal.hide{opacity:0;visibility:hidden}
+#music{position:fixed;right:22px;bottom:22px;z-index:80;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin:0;background:#170914;color:#e7b7c7;border:1px solid #d49aae66;font-size:18px;box-shadow:0 0 25px #b9366a44;opacity:0;transition:.5s}
+#music.show{opacity:1}
 </style>
 </head>
 <body>
@@ -128,6 +141,9 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 </section>
 
 
+<section id="keyReveal"><div class="key-scene"><div class="key-ring"></div><span class="key">🗝</span><div class="key-text">some things have to be unlocked first</div></div></section>
+<audio id="pipeDown" src="Drake%20-%20Pipe%20Down%20(Audio).mp3" preload="auto"></audio>
+<button id="music" aria-label="Toggle music">♫</button>
 <section id="bookIntro">
 <div class="book-stage" id="bookStage">
 <div class="book">
@@ -188,10 +204,33 @@ pieces.forEach(piece=>{
     }
   });
 });
+const keyReveal=document.getElementById("keyReveal");
+const music=document.getElementById("music");
+const pipeDown=document.getElementById("pipeDown");
+let fadeTimer;
+function fadeMusic(){
+  pipeDown.volume=0;
+  pipeDown.currentTime=0;
+  pipeDown.play().then(()=>{
+    clearInterval(fadeTimer);
+    let v=0;
+    fadeTimer=setInterval(()=>{v=Math.min(0.32,v+0.012);pipeDown.volume=v;if(v>=0.32)clearInterval(fadeTimer)},180);
+    music.classList.add("show");
+  }).catch(()=>{});
+}
+music.onclick=()=>{if(pipeDown.paused){fadeMusic()}else{pipeDown.pause();music.textContent="♫"}};
 startButton.onclick=()=>{
   if(next<3)return;
   startScreen.classList.add("hide");
-  setTimeout(()=>startScreen.remove(),1200);
+  setTimeout(()=>{
+    startScreen.remove();
+    keyReveal.classList.add("show");
+    fadeMusic();
+    setTimeout(()=>{
+      keyReveal.classList.add("hide");
+      setTimeout(()=>{keyReveal.remove();openBook();},1000);
+    },2600);
+  },1200);
 };
 
 const text = `Ayli,
@@ -244,13 +283,20 @@ function write(){
  },32);
 }
 function openBook(){
- pages.forEach(p=>p.classList.add("flip"));
+  window.scrollTo(0,0);
+  pages.forEach(p=>p.classList.remove("flip"));
+  bookStage.classList.remove("exit");
+  bookIntro.classList.remove("done");
+  setTimeout(()=>pages.forEach(p=>p.classList.add("flip")),900);
  setTimeout(()=>{
    bookStage.classList.add("exit");
-   setTimeout(()=>{bookIntro.classList.add("done");write()},900);
- },1700);
+   setTimeout(()=>{
+     bookIntro.classList.add("done");
+     setTimeout(write,1200);
+   },900);
+ },2600);
 }
-setTimeout(openBook,900);
+// The experience begins only after the puzzle and key reveal.
 again.onclick=write;
 </script>
 </body>
