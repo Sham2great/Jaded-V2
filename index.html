@@ -270,7 +270,7 @@ function unlockAndContinue(){
 }
 unlockKey.addEventListener("click",unlockAndContinue);
 
-const text = `Ayli,
+const text = `[NAME],
 
 I don't really know when you became someone I thought about this much.
 
@@ -323,12 +323,13 @@ function startAutoScroll(){
    if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+1.4));
  },30);
 }
+const DEMO_MODE=true;
 function renderLetterText(value){
   if(!DEMO_MODE){letter.textContent=value;return;}
   const frag=document.createDocumentFragment();
-  const parts=value.split(/(ayli)/ig);
+  const parts=value.split(/(\[NAME\])/ig);
   parts.forEach(part=>{
-    if(/^ayli$/i.test(part)){
+    if(/^\[NAME\]$/i.test(part)){
       const span=document.createElement("span");
       span.className="demo-blur-name";
       span.textContent=part;
@@ -372,9 +373,9 @@ function openBook(){
  },2600);
 }
 
+// Demo mode: keeps the name as a non-identifying placeholder during typing and blurs visible name instances.
 // Demo mode: automatically blurs every visible instance of "Ayli", including
 // the typewriter text as it appears.
-const DEMO_MODE=true;
 function blurNameInstances(root=document.body){
   if(!DEMO_MODE)return;
   const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
