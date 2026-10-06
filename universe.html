@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A Universe Built for Two ♡</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#05030b;color:#fff;font-family:Georgia,serif;overflow:hidden}
+body{position:relative;background:
+radial-gradient(circle at 50% 45%,#32152f 0,#160b20 35%,#07040e 72%,#020207 100%)}
+#space{position:fixed;inset:0;overflow:hidden}
+.nebula{position:absolute;border-radius:50%;filter:blur(70px);opacity:.35;pointer-events:none}
+.n1{width:45vw;height:45vw;left:-12vw;top:5vh;background:#8b315e}
+.n2{width:40vw;height:40vw;right:-10vw;bottom:-10vh;background:#403184}
+.n3{width:25vw;height:25vw;left:38vw;top:30vh;background:#9b5a7d;opacity:.18}
+.star{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff,0 0 18px #dba9ff;cursor:pointer;animation:twinkle 2s ease-in-out infinite}
+.star.big{width:7px;height:7px}
+.star:hover{transform:scale(2.5);box-shadow:0 0 12px #fff,0 0 30px #ffb9dd}
+@keyframes twinkle{0%,100%{opacity:.3}50%{opacity:1}}
+.constellation{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 2s}
+.constellation.show{opacity:.65}
+.line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,#f6cce2,transparent);transform-origin:left center;box-shadow:0 0 8px #e8a6cb}
+.ui{position:relative;z-index:5;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:25px}
+.kicker{font:600 10px system-ui;letter-spacing:5px;text-transform:uppercase;color:#dca8c3;opacity:.8}
+h1{font-size:clamp(42px,7vw,82px);font-weight:400;font-style:italic;margin:12px 0 8px;text-shadow:0 0 35px #c86b9b}
+.subtitle{font:15px system-ui;color:#cbb5c5;letter-spacing:.5px;max-width:470px;line-height:1.7}
+.start{margin-top:30px;padding:13px 25px;border:1px solid #fff4;border-radius:999px;background:#ffffff0b;color:#fff;font:600 11px system-ui;letter-spacing:3px;cursor:pointer;transition:.35s;backdrop-filter:blur(8px)}
+.start:hover{background:#fff;color:#241022;transform:translateY(-3px);box-shadow:0 12px 35px #0008}
+.hint{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);font:11px system-ui;letter-spacing:2px;color:#a98f9e;opacity:.7;z-index:5}
+.message{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.85);width:min(500px,88vw);padding:32px 28px;border:1px solid #fff3;border-radius:24px;background:#100916cc;backdrop-filter:blur(16px);box-shadow:0 25px 90px #000b;opacity:0;pointer-events:none;transition:.7s cubic-bezier(.2,.8,.2,1);z-index:10}
+.message.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.message h2{font-size:30px;font-weight:400;font-style:italic;margin:0 0 18px;color:#f4c6dc}
+.message p{font-size:17px;line-height:1.8;color:#eee1e9;margin:0}
+.close{margin-top:22px;border:0;background:transparent;color:#d99dbb;font:600 10px system-ui;letter-spacing:2px;cursor:pointer}
+.final{position:fixed;inset:0;background:#030208ee;z-index:20;display:flex;align-items:center;justify-content:center;text-align:center;padding:30px;opacity:0;pointer-events:none;transition:1.5s}
+.final.show{opacity:1;pointer-events:auto}
+.final-inner{max-width:650px}
+.final .tiny{font:600 10px system-ui;letter-spacing:5px;color:#c58ca8;text-transform:uppercase}
+.final h2{font-size:clamp(38px,6vw,70px);font-weight:400;font-style:italic;line-height:1.15;margin:18px 0}
+.final p{font:16px/1.8 system-ui;color:#cbbbc6}
+.back{margin-top:24px;padding:12px 20px;border:1px solid #fff3;border-radius:999px;background:#fff0;color:#fff;font:600 10px system-ui;letter-spacing:2px;cursor:pointer}
+@media(max-width:650px){.subtitle{font-size:14px}.hint{font-size:9px}.star{width:3px;height:3px}.star.big{width:5px;height:5px}}
+</style>
+</head>
+<body>
+<div id="space">
+  <div class="nebula n1"></div><div class="nebula n2"></div><div class="nebula n3"></div>
+  <div id="stars"></div><div class="constellation" id="constellation"></div>
+</div>
+<div class="ui">
+  <div class="kicker">For Ayli</div>
+  <h1>A Universe Built for Two</h1>
+  <div class="subtitle">Every star holds a thought. Click them slowly. Some things are easier to say when they're written in the sky.</div>
+  <button class="start" id="start">ENTER THE UNIVERSE</button>
+</div>
+<div class="hint">✦ explore the stars ✦</div>
+
+<div class="message" id="message">
+  <h2 id="msgTitle">A thought</h2>
+  <p id="msgText"></p>
+  <button class="close" id="close">CLOSE ✦</button>
+</div>
+
+<div class="final" id="final">
+  <div class="final-inner">
+    <div class="tiny">the last star</div>
+    <h2>Maybe some universes are meant to be discovered.</h2>
+    <p>I don't know what ours would look like. I just know that if there were ever a chance to find out, you're the person I'd want beside me.</p>
+    <button class="back" id="back">RETURN TO THE STARS</button>
+  </div>
+</div>
+
+<script>
+const thoughts=[
+["The first star","Some people become important before you even realize you've started looking for them."],
+["A possibility","I don't know if there is a version of this where we become something more. But I like wondering about it."],
+["Something different","Maybe love doesn't always arrive looking like what we expected."],
+["A quiet truth","Out of all the people I could have met, somehow you became the person I wonder about."],
+["No pressure","I don't need an answer hidden somewhere in these stars. I just wanted you to know what's in my sky."],
+["Timing","Maybe the right person can still arrive at the wrong time. That doesn't make the feeling any less real."],
+["If we tried","Maybe we'd surprise each other. Maybe we'd learn something. Maybe we'd simply find out."],
+["The unknown","The future is the one thing neither of us can read. Maybe that's what makes it beautiful."],
+["For you","If I could give you one thing, it would be the chance to see yourself through the eyes of someone who notices the little things."],
+["One last thought","Some questions don't need an immediate answer. Sometimes they're worth carrying until the timing feels right."]
+];
+
+const stars=document.getElementById("stars");
+const constellation=document.getElementById("constellation");
+const message=document.getElementById("message");
+const msgTitle=document.getElementById("msgTitle");
+const msgText=document.getElementById("msgText");
+let clicked=0;
+
+function makeStars(){
+  for(let i=0;i<90;i++){
+    const s=document.createElement("button");
+    s.className="star"+(i%13===0?" big":"");
+    s.setAttribute("aria-label","Star");
+    s.style.left=(Math.random()*96+2)+"vw";
+    s.style.top=(Math.random()*92+2)+"vh";
+    s.style.animationDelay=(Math.random()*3)+"s";
+    s.style.animationDuration=(1.5+Math.random()*3)+"s";
+    s.onclick=()=>{
+      const t=thoughts[i%thoughts.length];
+      msgTitle.textContent=t[0];
+      msgText.textContent=t[1];
+      message.classList.add("show");
+      clicked++;
+      if(clicked>=6) constellation.classList.add("show");
+      if(clicked===10) setTimeout(()=>document.getElementById("final").classList.add("show"),1200);
+    };
+    stars.appendChild(s);
+  }
+}
+function drawConstellation(){
+  const pts=[[22,35],[31,25],[42,34],[52,22],[63,31],[73,21],[81,39],[67,49],[55,43],[43,54],[31,48],[22,35]];
+  for(let i=0;i<pts.length-1;i++){
+    const [x1,y1]=pts[i],[x2,y2]=pts[i+1];
+    const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+    const line=document.createElement("div");
+    line.className="line";
+    line.style.left=x1+"vw";line.style.top=y1+"vh";line.style.width=len+"vw";
+    line.style.transform="rotate("+Math.atan2(dy,dx)+"rad)";
+    constellation.appendChild(line);
+  }
+}
+document.getElementById("start").onclick=()=>{
+  document.querySelector(".ui").style.opacity="0";
+  document.querySelector(".ui").style.pointerEvents="none";
+  setTimeout(()=>document.querySelector(".ui").style.display="none",900);
+};
+document.getElementById("close").onclick=()=>message.classList.remove("show");
+document.getElementById("back").onclick=()=>document.getElementById("final").classList.remove("show");
+makeStars();drawConstellation();
+</script>
+</body>
+</html>
