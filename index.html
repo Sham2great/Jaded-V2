@@ -3,16 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>A Letter That Writes Itself</title>
+<title>Before You Read This</title>
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#080608;color:#2d2228;font-family:Georgia,serif;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 40%,#5b203d 0,#1b0d17 42%,#050405 82%);z-index:-3}
-body:after{content:"";position:fixed;inset:0;background-image:radial-gradient(#fff2 1px,transparent 1px);background-size:42px 42px;opacity:.45;z-index:-2}
-.page{min-height:100vh;padding:8vh 0 16vh;display:flex;justify-content:center}
-.card{width:min(760px,92vw);background:#fffaf4;padding:55px 60px;box-shadow:0 30px 90px #000b;position:relative}
+body{margin:0;background:#050407;color:#f8edf2;font-family:Georgia,serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 45%,#702448 0,#24101d 35%,#050407 78%);z-index:-5}
+body:after{content:"";position:fixed;inset:0;background-image:radial-gradient(#fff3 1px,transparent 1px);background-size:38px 38px;opacity:.5;z-index:-4}
+#intro{position:fixed;inset:0;z-index:20;background:#050407;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:opacity 1.5s ease,visibility 1.5s}
+.intro-glow{position:absolute;width:55vw;height:55vw;border-radius:50%;background:#b12d68;filter:blur(110px);opacity:.2;animation:pulse 2s ease-in-out infinite}
+.intro-content{text-align:center;position:relative;padding:25px}
+.intro-small{font:600 10px system-ui;letter-spacing:6px;text-transform:uppercase;color:#c99aaa;opacity:0;animation:fadeUp 1s .5s forwards}
+.intro-main{font:italic clamp(38px,7vw,82px) Georgia,serif;font-weight:400;margin:25px 0;color:#fff;opacity:0;animation:fadeUp 1.4s 1.2s forwards}
+.intro-sub{font:italic 15px Georgia;color:#bdaab2;opacity:0;animation:fadeUp 1s 2.7s forwards}
+.intro-count{font:600 11px system-ui;letter-spacing:4px;color:#8e315d;margin-top:35px;opacity:0;animation:fadeUp 1s 3.7s forwards}
+.intro-line{width:0;height:1px;background:#c06a91;margin:20px auto;animation:line 1.4s 4s forwards;box-shadow:0 0 20px #c06a91}
+@keyframes pulse{50%{transform:scale(1.25);opacity:.32}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+.intro-small,.intro-main,.intro-sub,.intro-count{transform:translateY(18px)}
+@keyframes line{to{width:180px}}
+#intro.done{opacity:0;visibility:hidden}
+.page{min-height:100vh;padding:9vh 0 18vh;display:flex;justify-content:center}
+.card{width:min(760px,92vw);background:#fffaf4;color:#2d2228;padding:55px 60px;box-shadow:0 30px 100px #000c;position:relative;opacity:0;transform:translateY(40px);animation:cardIn 1.8s 5.2s forwards}
 .card:before{content:"";position:absolute;inset:13px;border:1px solid #8c687522;pointer-events:none}
+@keyframes cardIn{to{opacity:1;transform:none}}
 .label{text-align:center;font:600 10px system-ui;letter-spacing:4px;color:#9a7180;margin-bottom:25px}
 h1{text-align:center;font:italic 42px Georgia,serif;font-weight:400;color:#8e315d;margin:0 0 34px}
 #letter{font:17px/2 Georgia,serif;white-space:pre-wrap}
@@ -24,11 +38,23 @@ button{display:block;margin:22px auto 0;border:1px solid #a98492;background:tran
 .thought{position:absolute;color:#fff;opacity:0;font:italic 14px/1.5 Georgia,serif;text-shadow:0 0 18px #d99ab6;animation:think 7s ease-in-out infinite}
 .t1{left:5%;top:22%}.t2{right:6%;top:32%;animation-delay:1.5s}.t3{left:8%;bottom:25%;animation-delay:3s}.t4{right:7%;bottom:18%;animation-delay:4.5s}.t5{left:50%;top:8%;transform:translateX(-50%);animation-delay:2.2s}
 @keyframes think{0%,100%{opacity:0;transform:translateY(10px)}18%,65%{opacity:.72;transform:translateY(0)}80%{opacity:0;transform:translateY(-8px)}}
-@media(max-width:900px){.thought{display:none}}
-@media(max-width:600px){.page{padding-top:5vh}.card{width:94vw;padding:40px 28px}h1{font-size:34px}#letter{font-size:15px;line-height:1.85}}
+@media(max-width:900px){.thought{display:block;font-size:11px}.t1{left:3%;top:18%}.t2{right:3%;top:29%}.t3{left:3%;bottom:27%}.t4{right:3%;bottom:16%}.t5{top:9%}}
+@media(max-width:600px){.page{padding-top:5vh}.card{width:94vw;padding:40px 28px}h1{font-size:34px}#letter{font-size:15px;line-height:1.85}.intro-main{font-size:40px}.intro-sub{font-size:13px}}
 </style>
 </head>
 <body>
+
+<section id="intro">
+<div class="intro-glow"></div>
+<div class="intro-content">
+<div class="intro-small">PRIVATE TRANSMISSION · 01</div>
+<div class="intro-main">Before you read this...</div>
+<div class="intro-sub">there's something I've been trying to put into words.</div>
+<div class="intro-count">DON'T OVERTHINK IT</div>
+<div class="intro-line"></div>
+</div>
+</section>
+
 <div class="thoughts" aria-hidden="true">
 <div class="thought t1">what if I'm overthinking this?</div>
 <div class="thought t2">maybe I'm reading too much into it...</div>
@@ -75,40 +101,35 @@ And honestly...
 
 I think some possibilities are worth writing down.`;
 
+const intro=document.getElementById("intro");
 const letter=document.getElementById("letter");
 const again=document.getElementById("again");
 let i=0,timer,autoScroll;
 
-function write(){
- clearInterval(timer);
+function startAutoScroll(){
  clearInterval(autoScroll);
- letter.textContent="";
- again.style.display="none";
- window.scrollTo(0,0);
- i=0;
+ autoScroll=setInterval(()=>{
+   const max=document.documentElement.scrollHeight-window.innerHeight;
+   if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+.5));
+ },30);
+}
+
+function write(){
+ clearInterval(timer); clearInterval(autoScroll);
+ letter.textContent=""; again.style.display="none";
+ window.scrollTo(0,0); i=0;
+ startAutoScroll();
  timer=setInterval(()=>{
    letter.textContent=text.slice(0,i++);
    if(i>text.length){
-     clearInterval(timer);
+     clearInterval(timer); clearInterval(autoScroll);
      again.style.display="block";
-     startAutoScroll();
    }
  },32);
 }
 
-function startAutoScroll(){
- let direction=1;
- autoScroll=setInterval(()=>{
-   const max=document.documentElement.scrollHeight-window.innerHeight;
-   if(max<=0)return;
-   if(window.scrollY>=max-2) direction=-1;
-   if(window.scrollY<=2) direction=1;
-   window.scrollBy(0,direction*0.45);
- },30);
-}
-
+setTimeout(()=>{intro.classList.add("done"); setTimeout(write,900)},6100);
 again.onclick=write;
-write();
 </script>
 </body>
 </html>
