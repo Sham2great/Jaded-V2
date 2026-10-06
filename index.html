@@ -323,7 +323,7 @@ function startAutoScroll(){
    if(max>0) window.scrollTo(0,Math.min(max,window.scrollY+1.4));
  },30);
 }
-const DEMO_MODE=true;
+const DEMO_MODE=false;
 function setupDemoTitle(){if(DEMO_MODE){const t=document.querySelector(".demo-name-title");if(t)t.textContent="";}}
 function renderLetterText(value){
   if(!DEMO_MODE){letter.textContent=value;return;}
