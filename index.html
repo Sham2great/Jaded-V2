@@ -3,68 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>For Ayli ♡</title>
+<title>A Letter That Writes Itself</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#090609;color:#fff}
-body{font-family:system-ui,Arial,sans-serif;display:grid;place-items:center;overflow:hidden}
-body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 35%,#4b1830,#170b13 42%,#060506 80%);z-index:-2}
-body:after{content:"";position:fixed;inset:0;background-image:radial-gradient(#ffffff10 1px,transparent 1px);background-size:38px 38px;z-index:-1}
-.wrap{width:min(900px,94vw);padding:25px}
-.card{background:#fffaf5;color:#30242a;border-radius:6px;padding:55px 55px 48px;box-shadow:0 35px 100px #000b;position:relative;min-height:600px}
-.card:before{content:"";position:absolute;inset:12px;border:1px solid #8b687522;pointer-events:none}
-.top{font:600 9px system-ui;letter-spacing:4px;text-transform:uppercase;color:#98717f;text-align:center;margin-bottom:30px}
-h1{font:italic 44px Georgia,serif;font-weight:400;margin:0 0 28px;text-align:center;color:#8f315d}
-#letter{font:17px/2 Georgia,serif;white-space:pre-wrap;min-height:390px}
-.cursor{display:inline-block;width:2px;height:20px;background:#8d536b;vertical-align:-3px;animation:blink .8s infinite}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#080608;color:#2d2228}
+body{display:grid;place-items:center;font-family:Georgia,serif;overflow:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(circle at 50% 40%,#5b203d 0,#1b0d17 42%,#050405 82%);z-index:-2}
+body:after{content:"";position:fixed;inset:0;background-image:radial-gradient(#fff2 1px,transparent 1px);background-size:42px 42px;opacity:.45;z-index:-1}
+.card{width:min(760px,92vw);height:min(82vh,720px);background:#fffaf4;padding:55px 60px;box-shadow:0 30px 90px #000b;position:relative;overflow:auto}
+.card:before{content:"";position:absolute;inset:13px;border:1px solid #8c687522;pointer-events:none}
+.label{text-align:center;font:600 10px system-ui;letter-spacing:4px;color:#9a7180;margin-bottom:25px}
+h1{text-align:center;font:italic 42px Georgia,serif;font-weight:400;color:#8e315d;margin:0 0 34px}
+#letter{font:17px/2 Georgia,serif;white-space:pre-wrap}
+.cursor{display:inline-block;width:2px;height:19px;background:#8e315d;margin-left:2px;animation:blink .7s infinite;vertical-align:-3px}
 @keyframes blink{50%{opacity:0}}
-.bottom{text-align:center;margin-top:20px;color:#a07d88;font:italic 13px Georgia}
-button{margin-top:22px;border:1px solid #8b687255;background:transparent;border-radius:999px;padding:10px 19px;color:#76505f;cursor:pointer;font:600 10px system-ui;letter-spacing:2px}
-@media(max-width:600px){.card{padding:40px 25px;min-height:680px}h1{font-size:35px}#letter{font-size:15px;line-height:1.85}}
+.bottom{text-align:center;color:#a27d89;font:italic 13px Georgia;margin-top:30px}
+button{display:block;margin:22px auto 0;border:1px solid #a98492;background:transparent;border-radius:30px;padding:10px 18px;color:#76505f;font:600 10px system-ui;letter-spacing:2px;cursor:pointer}
+@media(max-width:600px){.card{padding:40px 28px;height:86vh}h1{font-size:34px}#letter{font-size:15px;line-height:1.85}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<section class="card">
-<div class="top">A LETTER THAT WRITES ITSELF</div>
+<main class="card">
+<div class="label">A LETTER THAT WRITES ITSELF</div>
 <h1>For Ayli ♡</h1>
 <div id="letter"></div><span class="cursor"></span>
 <div class="bottom">some things are easier to write than say</div>
-<button id="restart">READ IT AGAIN</button>
-</section>
-</div>
+<button id="again">READ IT AGAIN</button>
+</main>
 <script>
 const text = `Ayli,
 
 I don't really know when you became someone I thought about this much.
 
-Maybe it was the conversations. Maybe it was how easily we understood each other. Maybe it was simply the feeling that meeting you made me wonder about a version of life I hadn't considered before.
+Maybe it was the conversations. Maybe it was how easily we understood each other. Maybe it was just meeting someone who made me look at love a little differently.
 
 I know I can't predict where any of this goes.
 
 And I'm not trying to.
 
-I just think there's something beautiful about meeting someone who makes you curious enough to wonder what could happen if you tried something different.
+I just think there is something beautiful about the possibility of trying something different. Meeting someone outside the usual expectations. Letting two people who understand each other see what could happen if they ever got the chance.
 
 Maybe we'd surprise each other.
 Maybe we'd learn something.
 Maybe it wouldn't work at all.
 
-But if there ever came a moment when trying was actually possible, I'd want to know what that moment felt like.
+But if there ever came a moment when trying was actually possible, I'd want to know what it felt like.
 
 Not because I expect anything from you.
+Not because I think something is owed to me.
 
-Just because, out of all the possibilities, you're the one that made me wonder.
+Just because you are one of the few people who made me wonder.
 
 And honestly...
 
-I think that's worth writing down.`;
-const el=document.getElementById('letter'),restart=document.getElementById('restart');
+I think some possibilities are worth writing down.`;
+
+const letter=document.getElementById("letter");
+const again=document.getElementById("again");
 let i=0,timer;
+
 function write(){
- clearInterval(timer);el.textContent='';i=0;restart.style.display='none';
- timer=setInterval(()=>{el.textContent=text.slice(0,i++);if(i>text.length){clearInterval(timer);restart.style.display='inline-block'}},32);
+ clearInterval(timer);
+ letter.textContent="";
+ again.style.display="none";
+ i=0;
+ timer=setInterval(()=>{
+   letter.textContent=text.slice(0,i++);
+   if(i>text.length){
+     clearInterval(timer);
+     again.style.display="block";
+   }
+ },32);
 }
-restart.onclick=write;write();
+again.onclick=write;
+write();
 </script>
 </body>
 </html>
