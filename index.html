@@ -125,7 +125,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 #skipTyping:hover{transform:translateY(-2px);box-shadow:0 0 30px #d76d9766}
 
 /* DEMO MODE: blur every visible instance of the name */
-.demo-blur-name{filter:blur(7px);user-select:none}
+.demo-blur-name{filter:blur(7px);user-select:none}.demo-name-title{filter:blur(7px);user-select:none}
 </style>
 </head>
 <body>
@@ -175,7 +175,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 0 25px #d2769866;background
 <div class="page">
 <main class="card">
 <div class="label">A LETTER THAT WRITES ITSELF</div>
-<h1>For Ayli ♡</h1>
+<h1 id="letterTitle">For <span class="demo-name-title">[NAME]</span> ♡</h1>
 <div id="letter"></div><span class="cursor"></span>
 <div class="bottom">some things are easier to write than say</div>
 <button id="again">READ IT AGAIN</button>
@@ -324,6 +324,7 @@ function startAutoScroll(){
  },30);
 }
 const DEMO_MODE=true;
+function setupDemoTitle(){if(DEMO_MODE){const t=document.querySelector(".demo-name-title");if(t)t.textContent="";}}
 function renderLetterText(value){
   if(!DEMO_MODE){letter.textContent=value;return;}
   const frag=document.createDocumentFragment();
@@ -408,6 +409,7 @@ function installDemoBlur(){
   document.head.appendChild(style);
   blurNameInstances();
 }
+setupDemoTitle();
 installDemoBlur();
 const demoObserver=new MutationObserver(()=>blurNameInstances());
 demoObserver.observe(document.body,{childList:true,subtree:true});
